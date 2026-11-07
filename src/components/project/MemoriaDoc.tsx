@@ -154,11 +154,19 @@ export function MemoriaDoc({
             sido revisada ni validada por una persona antes de su emisión.
           </p>
 
-          <div className="mt-7 rounded-lg border-2 border-[#a5322a] bg-[#fdf6f4] p-5">
+          <p className="mt-4 inline-flex rounded-full border border-[#a5322a]/35 bg-[#fdf6f4] px-3 py-1 text-[9.5px] font-semibold uppercase tracking-[0.14em] text-[#8f2f27]">
+            Solo para fines experimentales
+          </p>
+
+          <div className="mt-5 rounded-lg border-2 border-[#a5322a] bg-[#fdf6f4] p-5">
             <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8f2f27]">
               No confíe en el contenido sin verificarlo
             </p>
             <ul className="mt-3 space-y-2 text-[11.5px] leading-5 text-[#4a3a37]">
+              <li>
+                Este documento es solo para fines experimentales y no debe
+                utilizarse en una instalación real.
+              </li>
               <li>
                 Puede contener errores de cálculo, datos incompletos, omisiones
                 o interpretaciones normativas incorrectas.
