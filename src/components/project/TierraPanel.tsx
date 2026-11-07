@@ -33,8 +33,8 @@ export function TierraPanel({
 
       <div className="grid gap-4 xl:grid-cols-[1.1fr_0.9fr]">
         <section className="surface-card p-5">
-          <h3 className="text-[13.5px] font-semibold">Datos del terreno y del electrodo</h3>
-          <p className="mt-1 text-[11.5px] text-muted-foreground">
+          <h3 className="text-[14.5px] font-semibold">Datos del terreno y del electrodo</h3>
+          <p className="mt-1 text-[12.5px] text-muted-foreground">
             Introduzca la resistividad del terreno y la geometría del electrodo.
             Si dispone de la resistencia medida, prevalece sobre la estimación.
           </p>
@@ -112,7 +112,7 @@ export function TierraPanel({
               step={0.5}
             />
             <div className="space-y-1.5" data-campo="resistenciaMedida">
-              <label className="text-[12px] font-medium text-foreground/80">
+              <label className="text-[13px] font-medium text-foreground/80">
                 Resistencia medida (Ω)
               </label>
               <input
@@ -126,11 +126,11 @@ export function TierraPanel({
                   upd({ resistenciaMedida: v === "" ? null : Number(v) });
                 }}
                 className={cn(
-                  "h-9 w-full rounded-lg border border-border bg-card px-3 text-[12px] tabular-nums outline-none focus-visible:ring-2 focus-visible:ring-ring/40",
+                  "h-9 w-full rounded-lg border border-border bg-card px-3 text-[13px] tabular-nums outline-none focus-visible:ring-2 focus-visible:ring-ring/40",
                   highlightCampo === "resistenciaMedida" && "field-highlight",
                 )}
               />
-              <p className="text-[11px] leading-4 text-muted-foreground">
+              <p className="text-[12px] leading-4 text-muted-foreground">
                 Dato de la verificación en obra. Déjelo vacío si aún no se ha
                 medido.
               </p>
@@ -141,10 +141,10 @@ export function TierraPanel({
         <div className="space-y-4">
           <section className="surface-card overflow-hidden">
             <div className="flex items-center justify-between border-b border-border/70 bg-muted/30 px-5 py-3.5">
-              <span className="text-[12px] font-medium">Resultado de la comprobación</span>
+              <span className="text-[13px] font-medium">Resultado de la comprobación</span>
               <span
                 className={cn(
-                  "inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10.5px] font-semibold uppercase tracking-wide",
+                  "inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[11.5px] font-semibold uppercase tracking-wide",
                   cumple === true
                     ? "bg-primary/10 text-primary"
                     : cumple === false
@@ -167,7 +167,7 @@ export function TierraPanel({
             </div>
 
             <div className="px-5 py-4">
-              <dl className="space-y-2.5 text-[11.5px]">
+              <dl className="space-y-2.5 text-[12.5px]">
                 <div className="flex items-baseline justify-between gap-3">
                   <dt className="text-muted-foreground">Límite 50 / IΔn</dt>
                   <dd className="font-medium tabular-nums">
@@ -193,20 +193,20 @@ export function TierraPanel({
               </dl>
 
               <div className="mt-4 rounded-lg border border-border/80 bg-muted/35 p-3">
-                <p className="flex items-center gap-1.5 text-[10.5px] font-semibold uppercase tracking-[0.1em] text-muted-foreground">
+                <p className="flex items-center gap-1.5 text-[11.5px] font-semibold uppercase tracking-[0.1em] text-muted-foreground">
                   <Ruler className="size-3.5" />
                   Método de estimación
                 </p>
-                <p className="mt-1.5 text-[11px] leading-5 text-muted-foreground">
+                <p className="mt-1.5 text-[12px] leading-5 text-muted-foreground">
                   {res.metodo}
                 </p>
-                <p className="mt-2 rounded bg-card px-2 py-1.5 text-[10.5px] tabular-nums text-foreground/70">
+                <p className="mt-2 rounded bg-card px-2 py-1.5 text-[11.5px] tabular-nums text-foreground/70">
                   R = ρ / (2πL) · [ln(4L/d) − 1] · d = 14 mm
                 </p>
               </div>
 
               {res.resistenciaVerificada === null && (
-                <p className="mt-3 flex items-start gap-2 text-[10.5px] leading-4 text-muted-foreground">
+                <p className="mt-3 flex items-start gap-2 text-[11.5px] leading-4 text-muted-foreground">
                   <Info className="mt-0.5 size-3.5 shrink-0" />
                   La conformidad definitiva exige medición con telurómetro e
                   informe de la verificación.
@@ -216,11 +216,11 @@ export function TierraPanel({
           </section>
 
           <section className="surface-card p-5">
-            <h3 className="flex items-center gap-2 text-[13.5px] font-semibold">
+            <h3 className="flex items-center gap-2 text-[14.5px] font-semibold">
               <CircuitBoard className="size-4 text-primary" />
               Esquema y coordinación
             </h3>
-            <div className="mt-3 space-y-3 text-[11.5px] leading-5 text-muted-foreground">
+            <div className="mt-3 space-y-3 text-[12.5px] leading-5 text-muted-foreground">
               <p>
                 <span className="font-medium text-foreground">Esquema {t.esquema}.</span>{" "}
                 {t.esquema === "TT"

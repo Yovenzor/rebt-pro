@@ -73,13 +73,13 @@ function CircuitoDialog({
     <Dialog open onOpenChange={(o) => !o && onClose()}>
       <DialogContent className="max-h-[92vh] overflow-y-auto sm:max-w-4xl">
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2 text-[16px]">
-            <span className="rounded-md bg-primary/10 px-2 py-0.5 text-[11px] font-semibold text-primary">
+          <DialogTitle className="flex items-center gap-2 text-[17px]">
+            <span className="rounded-md bg-primary/10 px-2 py-0.5 text-[12px] font-semibold text-primary">
               {draft.codigo}
             </span>
             {draft.nombre}
           </DialogTitle>
-          <DialogDescription className="text-[12px]">
+          <DialogDescription className="text-[13px]">
             {draft.tipo === "estandar"
               ? "Circuito normalizado ITC-BT-25. Las secciones y calibres automáticos respetan los mínimos reglamentarios."
               : "Circuito especial. El dimensionado se calcula con los criterios generales de la ITC-BT-19."}
@@ -158,7 +158,7 @@ function CircuitoDialog({
             </div>
 
             <div className="rounded-lg border border-border/80 p-3.5">
-              <p className="text-[10.5px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
+              <p className="text-[11.5px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
                 Condiciones de instalación
               </p>
               <div className="mt-3 grid gap-3.5 sm:grid-cols-2">
@@ -225,7 +225,7 @@ function CircuitoDialog({
             </div>
 
             <div className="rounded-lg border border-border/80 p-3.5">
-              <p className="text-[10.5px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
+              <p className="text-[11.5px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
                 Protección y diferencial
               </p>
               <div className="mt-3 grid gap-3.5 sm:grid-cols-2">
@@ -271,14 +271,14 @@ function CircuitoDialog({
             </div>
 
             <div>
-              <label className="text-[12px] font-medium text-foreground/80">
+              <label className="text-[13px] font-medium text-foreground/80">
                 Observaciones
               </label>
               <textarea
                 value={draft.observaciones}
                 onChange={(e) => set({ observaciones: e.target.value })}
                 rows={2}
-                className="mt-1.5 w-full rounded-lg border border-border bg-card px-3 py-2 text-[12px] outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
+                className="mt-1.5 w-full rounded-lg border border-border bg-card px-3 py-2 text-[13px] outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
                 placeholder="Notas de instalación, criterios particulares…"
               />
             </div>
@@ -286,11 +286,11 @@ function CircuitoDialog({
 
           <aside className="space-y-3">
             <div className="rounded-xl border border-border bg-muted/35 p-4">
-              <p className="flex items-center gap-1.5 text-[10.5px] font-semibold uppercase tracking-[0.1em] text-muted-foreground">
+              <p className="flex items-center gap-1.5 text-[11.5px] font-semibold uppercase tracking-[0.1em] text-muted-foreground">
                 <Calculator className="size-3.5" />
                 Resultado en vivo
               </p>
-              <dl className="mt-3 space-y-2 text-[11.5px]">
+              <dl className="mt-3 space-y-2 text-[12.5px]">
                 {[
                   ["Intensidad de diseño", `${num(r.ib, 2)} A`],
                   ["Magnetotérmico", `${r.in} A`],
@@ -310,7 +310,7 @@ function CircuitoDialog({
 
               <div
                 className={cn(
-                  "mt-3 flex items-start gap-2 rounded-lg border px-2.5 py-2 text-[10.5px] leading-4",
+                  "mt-3 flex items-start gap-2 rounded-lg border px-2.5 py-2 text-[11.5px] leading-4",
                   err
                     ? "border-destructive/30 bg-destructive/8 text-destructive"
                     : r.estado === "aviso"
@@ -335,10 +335,10 @@ function CircuitoDialog({
 
             {preset && (
               <div className="rounded-xl border border-border p-4">
-                <p className="text-[10.5px] font-semibold uppercase tracking-[0.1em] text-muted-foreground">
+                <p className="text-[11.5px] font-semibold uppercase tracking-[0.1em] text-muted-foreground">
                   Referencia ITC-BT-25
                 </p>
-                <dl className="mt-2.5 space-y-1.5 text-[11px]">
+                <dl className="mt-2.5 space-y-1.5 text-[12px]">
                   <div className="flex justify-between gap-2">
                     <dt className="text-muted-foreground">PIA de tabla</dt>
                     <dd className="tabular-nums">{preset.pia} A</dd>
@@ -359,7 +359,7 @@ function CircuitoDialog({
               </div>
             )}
 
-            <div className="rounded-xl bg-primary/[0.045] p-3.5 text-[10.5px] leading-4 text-muted-foreground">
+            <div className="rounded-xl bg-primary/[0.045] p-3.5 text-[11.5px] leading-4 text-muted-foreground">
               Sección por intensidad {r.seccionPorIntensidad} mm² · por caída{" "}
               {r.seccionPorCaida} mm². Se adopta la mayor de ambas.
             </div>
@@ -468,7 +468,7 @@ export function CircuitosPanel({
             <select
               value={nuevoCodigo}
               onChange={(e) => setNuevoCodigo(e.target.value)}
-              className="h-9 min-w-[210px] rounded-lg border border-border bg-card px-2.5 text-[12px] outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
+              className="h-9 min-w-[210px] rounded-lg border border-border bg-card px-2.5 text-[13px] outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
               aria-label="Circuito a añadir"
             >
               <option value="">Añadir circuito…</option>
@@ -528,17 +528,18 @@ export function CircuitosPanel({
               data-campo={`circuito-${c.id}`}
               className={cn(
                 "group transition-colors hover:bg-muted/35",
+                r.estado === "error" && "bg-destructive/[0.035]",
                 Boolean(highlightCampo) && editingId === c.id && "field-highlight",
               )}
             >
               <td className="px-4 py-2.5">
                 <div className="flex items-center gap-2">
-                  <span className="inline-flex min-w-9 justify-center rounded bg-muted px-1.5 py-0.5 text-[10px] font-semibold text-muted-foreground">
+                  <span className="inline-flex min-w-9 justify-center rounded bg-muted px-1.5 py-0.5 text-[11px] font-semibold text-muted-foreground">
                     {c.codigo}
                   </span>
                   <div className="min-w-0">
-                    <p className="truncate text-[12px] font-medium">{c.nombre}</p>
-                    <p className="truncate text-[10.5px] text-muted-foreground">
+                    <p className="truncate text-[13px] font-medium">{c.nombre}</p>
+                    <p className="truncate text-[11.5px] text-muted-foreground">
                       {c.fases === 3 ? "Trifásico" : "Monofásico"} ·{" "}
                       {c.metodo} · {c.aislamiento} · {c.puntos} pts
                     </p>
@@ -563,8 +564,11 @@ export function CircuitosPanel({
               <td className="px-3 py-2.5 text-center">
                 <span
                   className={cn(
-                    "inline-block size-2 rounded-full",
-                    estadoColor[r.estado],
+                    "inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-[10.5px] font-medium",
+                    r.estado === "error" && "bg-destructive/10 text-destructive",
+                    r.estado === "aviso" &&
+                      "bg-accent/15 text-accent-foreground",
+                    r.estado === "ok" && "bg-primary/8 text-primary",
                   )}
                   title={
                     r.estado === "ok"
@@ -573,7 +577,19 @@ export function CircuitosPanel({
                         ? "Revisar"
                         : "Incumple"
                   }
-                />
+                >
+                  <span
+                    className={cn(
+                      "size-1.5 rounded-full",
+                      estadoColor[r.estado],
+                    )}
+                  />
+                  {r.estado === "ok"
+                    ? "OK"
+                    : r.estado === "aviso"
+                      ? "Aviso"
+                      : "Error"}
+                </span>
               </td>
               <td className="px-4 py-2.5">
                 <div className="flex items-center justify-end gap-0.5">
@@ -652,11 +668,11 @@ export function CircuitosPanel({
           },
         ].map((k) => (
           <div key={k.label} className="surface-card px-4 py-3">
-            <p className="text-[10.5px] uppercase tracking-[0.1em] text-muted-foreground">
+            <p className="text-[11.5px] uppercase tracking-[0.1em] text-muted-foreground">
               {k.label}
             </p>
             <p className="mt-1 text-[17px] font-semibold tabular-nums">{k.value}</p>
-            <p className="mt-1 text-[10.5px] text-muted-foreground">{k.hint}</p>
+            <p className="mt-1 text-[11.5px] text-muted-foreground">{k.hint}</p>
           </div>
         ))}
       </div>

@@ -59,8 +59,8 @@ export function ElectrificacionPanel({
         <div className="space-y-4">
           <section className="surface-card p-5">
             <div className="flex items-center justify-between gap-3">
-              <h3 className="text-[13.5px] font-semibold">Previsiones de la vivienda</h3>
-              <span className="text-[10.5px] uppercase tracking-[0.1em] text-muted-foreground">
+              <h3 className="text-[14.5px] font-semibold">Previsiones de la vivienda</h3>
+              <span className="text-[11.5px] uppercase tracking-[0.1em] text-muted-foreground">
                 {OPCIONES.filter((o) => Boolean(e[o.clave])).length} seleccionadas
               </span>
             </div>
@@ -95,8 +95,8 @@ export function ElectrificacionPanel({
           </section>
 
           <section className="surface-card p-5">
-            <h3 className="text-[13.5px] font-semibold">Grado declarado en el proyecto</h3>
-            <p className="mt-1 text-[11.5px] text-muted-foreground">
+            <h3 className="text-[14.5px] font-semibold">Grado declarado en el proyecto</h3>
+            <p className="mt-1 text-[12.5px] text-muted-foreground">
               Puedes fijarlo manualmente. Si no cumple los criterios de la
               ITC-BT-25, el detector lo marcará como incumplimiento.
             </p>
@@ -129,12 +129,12 @@ export function ElectrificacionPanel({
                   )}
                 >
                   <span className="flex items-center justify-between gap-2">
-                    <span className="text-[12.5px] font-semibold">{g.titulo}</span>
+                    <span className="text-[13.5px] font-semibold">{g.titulo}</span>
                     {declarado === g.valor && (
                       <Check className="size-4 text-primary" />
                     )}
                   </span>
-                  <span className="mt-1 block text-[11px] text-muted-foreground">
+                  <span className="mt-1 block text-[12px] text-muted-foreground">
                     {g.detalle}
                   </span>
                 </button>
@@ -146,13 +146,13 @@ export function ElectrificacionPanel({
         <div className="space-y-4">
           <section className="surface-card overflow-hidden">
             <div className="flex items-center justify-between gap-3 border-b border-border/70 bg-muted/30 px-5 py-3.5">
-              <span className="flex items-center gap-2 text-[12px] font-medium">
+              <span className="flex items-center gap-2 text-[13px] font-medium">
                 <Sparkles className="size-4 text-accent-foreground/70" />
                 Grado calculado
               </span>
               <span
                 className={cn(
-                  "rounded-full px-2.5 py-1 text-[10.5px] font-semibold uppercase tracking-wider",
+                  "rounded-full px-2.5 py-1 text-[11.5px] font-semibold uppercase tracking-wider",
                   calculado === "elevada"
                     ? "bg-accent/20 text-accent-foreground"
                     : "bg-primary/10 text-primary",
@@ -165,18 +165,18 @@ export function ElectrificacionPanel({
             <div className="px-5 py-4">
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <p className="text-[10.5px] uppercase tracking-wider text-muted-foreground">
+                  <p className="text-[11.5px] uppercase tracking-wider text-muted-foreground">
                     Potencia mínima
                   </p>
-                  <p className="mt-1 text-[18px] font-semibold tabular-nums">
+                  <p className="mt-1 text-[20px] font-semibold tabular-nums">
                     {num(minimo)} W
                   </p>
                 </div>
                 <div>
-                  <p className="text-[10.5px] uppercase tracking-wider text-muted-foreground">
+                  <p className="text-[11.5px] uppercase tracking-wider text-muted-foreground">
                     IGA mínimo
                   </p>
-                  <p className="mt-1 text-[18px] font-semibold tabular-nums">
+                  <p className="mt-1 text-[20px] font-semibold tabular-nums">
                     {IGA_MINIMO_GRADO[calculado]} A
                   </p>
                 </div>
@@ -185,14 +185,14 @@ export function ElectrificacionPanel({
               {resultado.motivosGrado.length > 0 ? (
                 <ul className="mt-4 space-y-1.5">
                   {resultado.motivosGrado.map((m) => (
-                    <li key={m} className="flex gap-2 text-[11.5px] leading-5 text-muted-foreground">
+                    <li key={m} className="flex gap-2 text-[12.5px] leading-5 text-muted-foreground">
                       <span className="mt-1.5 size-1 shrink-0 rounded-full bg-accent-foreground/60" />
                       {m}
                     </li>
                   ))}
                 </ul>
               ) : (
-                <p className="mt-4 text-[11.5px] leading-5 text-muted-foreground">
+                <p className="mt-4 text-[12.5px] leading-5 text-muted-foreground">
                   No se ha previsto ningún uso que obligue a electrificación
                   elevada. Se aplica el mínimo reglamentario de 5.750 W.
                 </p>
@@ -200,7 +200,7 @@ export function ElectrificacionPanel({
 
               {discrepancia && (
                 <div className="mt-4 rounded-lg border border-accent/40 bg-accent/[0.08] p-3">
-                  <p className="flex items-start gap-2 text-[11px] leading-5 text-accent-foreground">
+                  <p className="flex items-start gap-2 text-[12px] leading-5 text-accent-foreground">
                     <AlertTriangle className="mt-0.5 size-3.5 shrink-0" />
                     El proyecto declara electrificación {declarado}, pero los
                     criterios calculados exigen {calculado}.
@@ -208,7 +208,7 @@ export function ElectrificacionPanel({
                   <Button
                     size="sm"
                     variant="outline"
-                    className="mt-2 h-7 border-accent/40 bg-white/60 text-[11px]"
+                    className="mt-2 h-7 border-accent/40 bg-white/60 text-[12px]"
                     onClick={() =>
                       upd({
                         grado: calculado,
@@ -223,8 +223,8 @@ export function ElectrificacionPanel({
           </section>
 
           <section className="surface-card p-5">
-            <h3 className="text-[13.5px] font-semibold">Circuitos exigidos</h3>
-            <p className="mt-1 text-[11.5px] text-muted-foreground">
+            <h3 className="text-[14.5px] font-semibold">Circuitos exigidos</h3>
+            <p className="mt-1 text-[12.5px] text-muted-foreground">
               Mínimos de la ITC-BT-25 para el grado calculado.
             </p>
             <div className="mt-3 flex flex-wrap gap-1.5">
@@ -236,7 +236,7 @@ export function ElectrificacionPanel({
                     key={codigo}
                     title={preset?.nombre}
                     className={cn(
-                      "inline-flex items-center gap-1 rounded-md border px-2 py-1 text-[11px]",
+                      "inline-flex items-center gap-1 rounded-md border px-2 py-1 text-[12px]",
                       presente
                         ? "border-primary/25 bg-primary/8 text-primary"
                         : "border-destructive/30 bg-destructive/8 text-destructive",
@@ -253,18 +253,18 @@ export function ElectrificacionPanel({
               })}
             </div>
             {resultado.circuitosFaltantes.length > 0 && (
-              <p className="mt-3 border-t border-border/70 pt-3 text-[11px] leading-5 text-destructive">
+              <p className="mt-3 border-t border-border/70 pt-3 text-[12px] leading-5 text-destructive">
                 Falta: {resultado.circuitosFaltantes.join(", ")}.
               </p>
             )}
           </section>
 
           <section className="surface-card p-5">
-            <h3 className="flex items-center gap-2 text-[13.5px] font-semibold">
+            <h3 className="flex items-center gap-2 text-[14.5px] font-semibold">
               <ShieldCheck className="size-4 text-primary" />
               Previsión de cargas
             </h3>
-            <dl className="mt-3 space-y-2 text-[11.5px]">
+            <dl className="mt-3 space-y-2 text-[12.5px]">
               {[
                 ["Potencia instalada", potencia(resultado.potenciaInstalada)],
                 ["Potencia simultánea estimada", potencia(resultado.potenciaSimultanea)],
@@ -287,7 +287,7 @@ export function ElectrificacionPanel({
                 </div>
               ))}
             </dl>
-            <p className="mt-3 border-t border-border/70 pt-2.5 text-[10.5px] leading-4 text-muted-foreground">
+            <p className="mt-3 border-t border-border/70 pt-2.5 text-[11.5px] leading-4 text-muted-foreground">
               La potencia máxima admisible se obtiene del calibre del IGA
               adoptado, no de la suma aritmética de los circuitos.
             </p>

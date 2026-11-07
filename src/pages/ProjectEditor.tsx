@@ -161,7 +161,8 @@ export default function ProjectEditor() {
     s.id === "validacion"
       ? {
           ...s,
-          badge: resumen.criticos + resumen.incumplimientos,
+          badge:
+            resumen.criticos + resumen.incumplimientos + resumen.pendientes,
           badgeTone: "error" as const,
         }
       : s,
@@ -178,8 +179,8 @@ export default function ProjectEditor() {
   if (data === null || !draft || !resultado) {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center gap-4 bg-background px-6 text-center">
-        <p className="text-[16px] font-semibold">Instalación no disponible</p>
-        <p className="max-w-sm text-[12.5px] text-muted-foreground">
+        <p className="text-[17px] font-semibold">Instalación no disponible</p>
+        <p className="max-w-sm text-[13.5px] text-muted-foreground">
           La instalación no existe o pertenece a otra cuenta. Vuelve a tu lista
           de instalaciones para continuar.
         </p>
@@ -203,7 +204,7 @@ export default function ProjectEditor() {
       subtitle={draft.nombre}
       actions={
         <>
-          <span className="hidden items-center gap-1.5 text-[10.5px] text-muted-foreground sm:inline-flex">
+          <span className="hidden items-center gap-1.5 text-[11.5px] text-muted-foreground sm:inline-flex">
             <span
               className={cn(
                 "size-1.5 rounded-full",
@@ -227,7 +228,7 @@ export default function ProjectEditor() {
         </>
       }
     >
-      <div className="mx-auto w-full max-w-6xl">
+      <div className="project-workspace mx-auto w-full max-w-6xl">
         {seccion === "resumen" && (
           <ResumenPanel
             proyecto={draft}
@@ -303,13 +304,13 @@ export default function ProjectEditor() {
           <div className="grid gap-4 lg:grid-cols-[1.2fr_0.8fr]">
             <section className="surface-card p-6">
               <p className="eyebrow">Documento</p>
-              <h2 className="mt-2 text-[22px] font-semibold tracking-tight">
+              <h2 className="mt-2 text-[24px] font-semibold tracking-tight">
                 Memoria técnica de diseño
               </h2>
-              <p className="mt-1 text-[12.5px] text-muted-foreground">
+              <p className="mt-1 text-[13.5px] text-muted-foreground">
                 El manual de la instalación, en A4 y listo para entregar.
               </p>
-              <p className="mt-3 text-[13px] leading-6 text-muted-foreground">
+              <p className="mt-3 text-[14px] leading-6 text-muted-foreground">
                 Documento A4 con la identificación del titular, la normativa
                 aplicada, el grado de electrificación, la previsión de cargas, los
                 circuitos, los cálculos de intensidades y secciones, las caídas de
@@ -328,7 +329,7 @@ export default function ProjectEditor() {
                 ].map((x) => (
                   <p
                     key={x}
-                    className="flex items-center gap-2 rounded-lg bg-muted/50 px-3 py-2 text-[11.5px]"
+                    className="flex items-center gap-2 rounded-lg bg-muted/50 px-3 py-2 text-[12.5px]"
                   >
                     <FileText className="size-3.5 text-primary" />
                     {x}
@@ -353,8 +354,8 @@ export default function ProjectEditor() {
             </section>
 
             <section className="surface-card p-6">
-              <h3 className="text-[13.5px] font-semibold">Antes de emitir</h3>
-              <ul className="mt-3 space-y-2.5 text-[11.5px] leading-5 text-muted-foreground">
+              <h3 className="text-[14.5px] font-semibold">Antes de emitir</h3>
+              <ul className="mt-3 space-y-2.5 text-[12.5px] leading-5 text-muted-foreground">
                 <li className="flex gap-2">
                   <ShieldCheck className="mt-0.5 size-4 shrink-0 text-primary" />
                   {resumen.criticos === 0 && resumen.incumplimientos === 0

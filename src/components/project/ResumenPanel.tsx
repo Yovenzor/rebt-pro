@@ -1,7 +1,7 @@
 import { SeverityBadge, Stat } from "./ui";
 import { Button } from "@/components/ui/button";
 import { num, potencia } from "@/lib/format";
-import type { Hallazgo, SeccionId } from "@/lib/rebt/findings";
+import type { Hallazgo, SeccionId, Severidad } from "@/lib/rebt/findings";
 import { resumenHallazgos } from "@/lib/rebt/findings";
 import type { Proyecto, ResultadoProyecto } from "@/lib/rebt/types";
 import { cn } from "@/lib/utils";
@@ -51,15 +51,23 @@ export function ResumenPanel({
         ? "oklch(0.75 0.13 80)"
         : "oklch(0.52 0.09 202)";
 
+  const punto: Record<Severidad, string> = {
+    critico: "bg-destructive",
+    incumplimiento: "bg-accent",
+    advertencia: "bg-accent/70",
+    pendiente: "bg-[#8797a8]",
+    recomendacion: "bg-primary",
+  };
+
   return (
     <div>
       <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <p className="eyebrow">Tu instalación</p>
-          <h2 className="mt-1.5 text-[24px] font-semibold tracking-tight">
+          <h2 className="mt-1.5 text-[26px] font-semibold tracking-tight">
             {proyecto.nombre || "Instalación sin nombre"}
           </h2>
-          <p className="mt-1 text-[12.5px] text-muted-foreground">
+          <p className="mt-1 text-[13.5px] text-muted-foreground">
             {proyecto.municipio || "Municipio pendiente"} ·{" "}
             {proyecto.superficie} m² · electrificación{" "}
             {resultado.gradoCalculado === "elevada" ? "elevada" : "básica"}
@@ -106,12 +114,12 @@ export function ResumenPanel({
         <section className="surface-card p-5">
           <div className="flex items-center justify-between gap-3">
             <div>
-              <h3 className="text-[13.5px] font-semibold">Potencia por circuito</h3>
-              <p className="mt-0.5 text-[11px] text-muted-foreground">
+              <h3 className="text-[14.5px] font-semibold">Potencia por circuito</h3>
+              <p className="mt-0.5 text-[12px] text-muted-foreground">
                 Potencia prevista de cada circuito, en vatios.
               </p>
             </div>
-            <span className="inline-flex items-center gap-1.5 text-[10.5px] text-muted-foreground">
+            <span className="inline-flex items-center gap-1.5 text-[11.5px] text-muted-foreground">
               <span className="size-2 rounded-full bg-primary" /> conforme
               <span className="ml-2 size-2 rounded-full bg-[oklch(0.75_0.13_80)]" />{" "}
               revisar
@@ -160,7 +168,7 @@ export function ResumenPanel({
             ) : (
               <ShieldAlert className="size-4 text-destructive" />
             )}
-            <h3 className="text-[13.5px] font-semibold">Estado de la instalación</h3>
+            <h3 className="text-[14.5px] font-semibold">Estado de la instalación</h3>
           </div>
 
           <div className="mt-4 grid grid-cols-2 gap-2.5">
@@ -169,24 +177,28 @@ export function ResumenPanel({
                 k: "Críticos",
                 v: resumen.criticos,
                 tone: "text-destructive",
+                box: "border-destructive/30 bg-destructive/[0.06]",
                 ir: "validacion" as SeccionId,
               },
               {
                 k: "Incumplimientos",
                 v: resumen.incumplimientos,
                 tone: "text-accent-foreground",
+                box: "border-accent/40 bg-accent/[0.09]",
                 ir: "validacion" as SeccionId,
               },
               {
                 k: "Advertencias",
                 v: resumen.advertencias,
                 tone: "text-muted-foreground",
+                box: "border-border/80 bg-muted/25",
                 ir: "validacion" as SeccionId,
               },
               {
                 k: "Pendientes",
                 v: resumen.pendientes,
                 tone: "text-muted-foreground",
+                box: "border-border/80 bg-muted/25",
                 ir: "validacion" as SeccionId,
               },
             ].map((x) => (
@@ -194,12 +206,15 @@ export function ResumenPanel({
                 key={x.k}
                 type="button"
                 onClick={() => onIr(x.ir)}
-                className="rounded-lg border border-border/80 bg-muted/25 px-3 py-2.5 text-left transition-colors hover:bg-muted/50"
+                className={cn(
+                  "rounded-lg border px-3 py-2.5 text-left transition-colors hover:bg-muted/50",
+                  x.v > 0 ? x.box : "border-border/80 bg-muted/25",
+                )}
               >
                 <p className="text-[10px] uppercase tracking-[0.1em] text-muted-foreground">
                   {x.k}
                 </p>
-                <p className={cn("mt-1 text-[18px] font-semibold tabular-nums", x.tone)}>
+                <p className={cn("mt-1 text-[20px] font-semibold tabular-nums", x.tone)}>
                   {x.v}
                 </p>
               </button>
@@ -208,7 +223,7 @@ export function ResumenPanel({
 
           <div
             className={cn(
-              "mt-4 rounded-lg border px-3 py-2.5 text-[11px] leading-5",
+              "mt-4 rounded-lg border px-3 py-2.5 text-[12px] leading-5",
               resumen.puedeValidar
                 ? "border-primary/25 bg-primary/8 text-primary"
                 : "border-destructive/25 bg-destructive/[0.05] text-destructive",
@@ -230,7 +245,7 @@ export function ResumenPanel({
             )}
           </div>
 
-          <dl className="mt-4 space-y-2 border-t border-border/70 pt-3 text-[11px]">
+          <dl className="mt-4 space-y-2 border-t border-border/70 pt-3 text-[12px]">
             <div className="flex justify-between gap-3">
               <dt className="text-muted-foreground">Resistencia de tierra</dt>
               <dd className="font-medium tabular-nums">
@@ -261,15 +276,28 @@ export function ResumenPanel({
       </div>
 
       <section className="mt-4 surface-card p-5">
-        <div className="flex items-center justify-between gap-3">
-          <h3 className="flex items-center gap-2 text-[13.5px] font-semibold">
-            <CircuitBoard className="size-4 text-primary" />
-            Lo que pide atención
-          </h3>
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <div className="flex items-center gap-2">
+            <h3 className="flex items-center gap-2 text-[14.5px] font-semibold">
+              <CircuitBoard className="size-4 text-primary" />
+              Lo que pide atención
+            </h3>
+            {resumen.criticos +
+              resumen.incumplimientos +
+              resumen.pendientes >
+              0 && (
+              <span className="rounded-full bg-destructive/10 px-2.5 py-0.5 text-[11px] font-semibold text-destructive">
+                {resumen.criticos +
+                  resumen.incumplimientos +
+                  resumen.pendientes}{" "}
+                bloqueos
+              </span>
+            )}
+          </div>
           <button
             type="button"
             onClick={() => onIr("validacion")}
-            className="inline-flex items-center gap-1 text-[11px] font-medium text-primary hover:underline"
+            className="inline-flex items-center gap-1 text-[12px] font-medium text-primary hover:underline"
           >
             Ver todo
             <ArrowRight className="size-3" />
@@ -277,22 +305,35 @@ export function ResumenPanel({
         </div>
 
         {hallazgos.length === 0 ? (
-          <p className="mt-4 flex items-center gap-2 rounded-lg bg-primary/8 px-3 py-3 text-[11.5px] text-primary">
+          <p className="mt-4 flex items-center gap-2 rounded-lg bg-primary/8 px-3 py-3 text-[12.5px] text-primary">
             <CheckCircle2 className="size-4" />
             Nada pendiente: los cálculos y las comprobaciones cuadran.
           </p>
         ) : (
           <ul className="mt-3 divide-y divide-border/70">
             {hallazgos.slice(0, 5).map((x) => (
-              <li key={x.id} className="flex flex-wrap items-center gap-3 py-2.5">
-                <SeverityBadge severidad={x.severidad} />
-                <span className="min-w-0 flex-1 truncate text-[11.5px]">
-                  {x.titulo}
-                </span>
+              <li
+                key={x.id}
+                className="flex flex-col gap-2 py-3 sm:flex-row sm:items-center"
+              >
+                <div className="flex min-w-0 flex-1 items-start gap-2.5">
+                  <span
+                    className={cn(
+                      "mt-2 size-2 shrink-0 rounded-full",
+                      punto[x.severidad],
+                    )}
+                  />
+                  <div className="min-w-0">
+                    <SeverityBadge severidad={x.severidad} />
+                    <p className="mt-1 text-[12.5px] font-medium leading-5">
+                      {x.titulo}
+                    </p>
+                  </div>
+                </div>
                 <Button
-                  variant="ghost"
+                  variant="outline"
                   size="sm"
-                  className="h-7 gap-1 text-[11px] text-primary"
+                  className="shrink-0 gap-1.5 self-start"
                   onClick={() =>
                     onIr(x.seccion, {
                       circuitoId: x.circuitoId,
@@ -300,8 +341,8 @@ export function ResumenPanel({
                     })
                   }
                 >
-                  IR AL ERROR
-                  <ArrowRight className="size-3" />
+                  Corregir
+                  <ArrowRight className="size-3.5" />
                 </Button>
               </li>
             ))}

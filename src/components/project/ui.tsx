@@ -32,9 +32,9 @@ export function SectionHeader({
             {eyebrow}
           </p>
         )}
-        <h2 className="text-[22px] font-semibold tracking-tight">{title}</h2>
+        <h2 className="text-[24px] font-semibold tracking-tight">{title}</h2>
         {description && (
-          <p className="mt-1 max-w-2xl text-[13px] leading-6 text-muted-foreground">
+          <p className="mt-1 max-w-2xl text-[14px] leading-6 text-muted-foreground">
             {description}
           </p>
         )}
@@ -66,11 +66,11 @@ export function Field({
       className={cn("space-y-1.5", className, highlight && "field-highlight p-1")}
       data-campo={campo}
     >
-      <Label htmlFor={htmlFor} className="text-[12px] font-medium text-foreground/80">
+      <Label htmlFor={htmlFor} className="text-[13px] font-medium text-foreground/80">
         {label}
       </Label>
       {children}
-      {hint && <p className="text-[11px] leading-4 text-muted-foreground">{hint}</p>}
+      {hint && <p className="text-[12px] leading-4 text-muted-foreground">{hint}</p>}
     </div>
   );
 }
@@ -173,7 +173,7 @@ export function NumberField({
           className={cn("h-9 bg-card tabular-nums", unit && "pr-11")}
         />
         {unit && (
-          <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[11px] text-muted-foreground">
+          <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[12px] text-muted-foreground">
             {unit}
           </span>
         )}
@@ -259,9 +259,9 @@ export function CheckRow({
         className="mt-0.5 size-4 shrink-0 accent-[var(--primary)]"
       />
       <span className="min-w-0">
-        <span className="block text-[12.5px] font-medium leading-4">{label}</span>
+        <span className="block text-[13.5px] font-medium leading-4">{label}</span>
         {description && (
-          <span className="mt-1 block text-[11px] leading-4 text-muted-foreground">
+          <span className="mt-1 block text-[12px] leading-4 text-muted-foreground">
             {description}
           </span>
         )}
@@ -278,6 +278,14 @@ const severidadEstilo: Record<Severidad, string> = {
   pendiente: "border-border bg-muted text-muted-foreground",
 };
 
+const severidadPunto: Record<Severidad, string> = {
+  critico: "bg-destructive",
+  incumplimiento: "bg-accent",
+  advertencia: "bg-accent/70",
+  recomendacion: "bg-primary",
+  pendiente: "bg-muted-foreground/60",
+};
+
 export function SeverityBadge({ severidad }: { severidad: Severidad }) {
   const etiqueta: Record<Severidad, string> = {
     critico: "Crítico",
@@ -289,8 +297,12 @@ export function SeverityBadge({ severidad }: { severidad: Severidad }) {
   return (
     <Badge
       variant="outline"
-      className={cn("border px-2 py-0.5 text-[10px] font-medium", severidadEstilo[severidad])}
+      className={cn(
+        "gap-1.5 border px-2 py-0.5 text-[11px] font-medium",
+        severidadEstilo[severidad],
+      )}
     >
+      <span className={cn("size-1.5 rounded-full", severidadPunto[severidad])} />
       {etiqueta[severidad]}
     </Badge>
   );
@@ -323,12 +335,12 @@ export function Stat({
                 : "bg-border",
         )}
       />
-      <p className="text-[10.5px] font-medium uppercase tracking-[0.12em] text-muted-foreground">
+      <p className="text-[11.5px] font-medium uppercase tracking-[0.12em] text-muted-foreground">
         {label}
       </p>
       <p
         className={cn(
-          "mt-1.5 text-[24px] font-semibold leading-none tracking-tight tabular-nums",
+          "mt-1.5 text-[26px] font-semibold leading-none tracking-tight tabular-nums",
           tone === "primary" && "text-primary",
           tone === "warning" && "text-accent-foreground",
           tone === "danger" && "text-destructive",
@@ -336,12 +348,12 @@ export function Stat({
       >
         {value}
         {unit && (
-          <span className="ml-1 text-[12px] font-normal text-muted-foreground">
+          <span className="ml-1 text-[13px] font-normal text-muted-foreground">
             {unit}
           </span>
         )}
       </p>
-      {hint && <p className="mt-2 text-[11px] leading-4 text-muted-foreground">{hint}</p>}
+      {hint && <p className="mt-2 text-[12px] leading-4 text-muted-foreground">{hint}</p>}
     </div>
   );
 }
@@ -357,8 +369,8 @@ export function DataTable({
 }) {
   return (
     <div className={cn("surface-card overflow-x-auto", className)}>
-      <table className="w-full min-w-[680px] text-[12px]">
-        <thead className="border-b border-border/80 bg-muted/40 text-[10px] uppercase tracking-[0.08em] text-muted-foreground">
+      <table className="w-full min-w-[680px] text-[13px]">
+        <thead className="border-b border-border/80 bg-muted/40 text-[11px] uppercase tracking-[0.08em] text-muted-foreground">
           {head}
         </thead>
         <tbody className="divide-y divide-border/60">{children}</tbody>

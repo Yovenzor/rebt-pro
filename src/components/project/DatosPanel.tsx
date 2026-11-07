@@ -63,8 +63,8 @@ export function DatosPanel({
 
       <div className="grid gap-4 xl:grid-cols-2">
         <section className="surface-card p-5">
-          <h3 className="text-[13.5px] font-semibold">Titular y emplazamiento</h3>
-          <p className="mt-1 text-[11.5px] text-muted-foreground">
+          <h3 className="text-[14.5px] font-semibold">Titular y emplazamiento</h3>
+          <p className="mt-1 text-[12.5px] text-muted-foreground">
             Datos que figurarán en la portada y en el apartado 1 de la memoria.
           </p>
           <div className="mt-4 grid gap-3.5 sm:grid-cols-2">
@@ -124,8 +124,8 @@ export function DatosPanel({
         </section>
 
         <section className="surface-card p-5">
-          <h3 className="text-[13.5px] font-semibold">Características de la vivienda</h3>
-          <p className="mt-1 text-[11.5px] text-muted-foreground">
+          <h3 className="text-[14.5px] font-semibold">Características de la vivienda</h3>
+          <p className="mt-1 text-[12.5px] text-muted-foreground">
             La superficie y las previsiones de uso determinan el grado de
             electrificación exigible.
           </p>
@@ -205,8 +205,8 @@ export function DatosPanel({
         </section>
 
         <section className="surface-card p-5">
-          <h3 className="text-[13.5px] font-semibold">Suministro y derivación individual</h3>
-          <p className="mt-1 text-[11.5px] text-muted-foreground">
+          <h3 className="text-[14.5px] font-semibold">Suministro y derivación individual</h3>
+          <p className="mt-1 text-[12.5px] text-muted-foreground">
             Condiciones de la acometida según los datos facilitados por la
             distribuidora.
           </p>
@@ -280,15 +280,15 @@ export function DatosPanel({
           </div>
 
           <div className="mt-4 rounded-lg border border-border/80 bg-muted/40 p-3">
-            <div className="flex items-center gap-2 text-[11px] font-medium text-muted-foreground">
+            <div className="flex items-center gap-2 text-[12px] font-medium text-muted-foreground">
               <Calculator className="size-3.5" />
               Comprobación orientativa de la derivación individual
             </div>
-            <p className="mt-1.5 text-[12px] tabular-nums">
+            <p className="mt-1.5 text-[13px] tabular-nums">
               I = {num(intensidad, 2)} A · ΔU ={" "}
               {caidaDI ? `${num(caidaDI, 2)} V (${num(caidaDIPct, 2)} %)` : "sin datos"}
             </p>
-            <p className="mt-1 flex items-start gap-1.5 text-[10.5px] leading-4 text-muted-foreground">
+            <p className="mt-1 flex items-start gap-1.5 text-[11.5px] leading-4 text-muted-foreground">
               <Info className="mt-0.5 size-3 shrink-0" />
               Cálculo informativo con γ = 48 m/(Ω·mm²). El límite aplicable de
               la derivación debe confirmarse con la ITC-BT-15 y la distribuidora.
@@ -297,8 +297,8 @@ export function DatosPanel({
         </section>
 
         <section className="surface-card p-5">
-          <h3 className="text-[13.5px] font-semibold">Técnico, empresa y expediente</h3>
-          <p className="mt-1 text-[11.5px] text-muted-foreground">
+          <h3 className="text-[14.5px] font-semibold">Técnico, empresa y expediente</h3>
+          <p className="mt-1 text-[12.5px] text-muted-foreground">
             Identificación de quien asume la documentación técnica.
           </p>
           <div className="mt-4 grid gap-3.5 sm:grid-cols-2">
@@ -332,7 +332,7 @@ export function DatosPanel({
               field="fecha"
             />
           </div>
-          <div className="mt-4 rounded-lg bg-primary/[0.045] p-3 text-[11px] leading-5 text-muted-foreground">
+          <div className="mt-4 rounded-lg bg-primary/[0.045] p-3 text-[12px] leading-5 text-muted-foreground">
             <span className="font-medium text-foreground">Alcance del documento:</span>{" "}
             memoria técnica de diseño y documentación de apoyo. No sustituye la
             firma del técnico competente ni la certificación del instalador

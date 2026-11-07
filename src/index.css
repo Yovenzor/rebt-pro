@@ -152,6 +152,12 @@
     @apply text-[11px] font-semibold uppercase tracking-[0.16em] text-muted-foreground;
   }
 
+  /* En el espacio de trabajo la letra sube un punto para leer tablas y
+datos con más comodidad, sin tocar la landing ni el acceso. */
+  .project-workspace .eyebrow {
+    font-size: 0.73rem;
+  }
+
   /* Retícula técnica muy tenue para fondos de sección. */
   .blueprint {
     background-image:
