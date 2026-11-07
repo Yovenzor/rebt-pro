@@ -1,0 +1,299 @@
+/* DO NOT CHANGE */
+@import "tailwindcss";
+@import "tw-animate-css";
+@custom-variant dark (&:is(.dark *));
+
+/* DO NOT CHANGE */
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+/* CHANGE VALUES FOR THEME */
+:root {
+  --radius: 0.75rem;
+  --background: oklch(0.98 0.004 95);
+  --foreground: oklch(0.245 0.014 250);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.245 0.014 250);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.245 0.014 250);
+  --primary: oklch(0.44 0.072 202);
+  --primary-foreground: oklch(0.99 0.002 200);
+  --secondary: oklch(0.955 0.008 210);
+  --secondary-foreground: oklch(0.32 0.03 215);
+  --muted: oklch(0.962 0.005 240);
+  --muted-foreground: oklch(0.52 0.014 250);
+  --accent: oklch(0.72 0.125 65);
+  --accent-foreground: oklch(0.27 0.035 62);
+  --destructive: oklch(0.56 0.19 27);
+  --border: oklch(0.905 0.008 250);
+  --input: oklch(0.895 0.009 250);
+  --ring: oklch(0.55 0.06 202);
+  --chart-1: oklch(0.52 0.09 202);
+  --chart-2: oklch(0.72 0.125 65);
+  --chart-3: oklch(0.55 0.055 250);
+  --chart-4: oklch(0.63 0.075 150);
+  --chart-5: oklch(0.7 0.04 90);
+  --sidebar: oklch(0.225 0.016 246);
+  --sidebar-foreground: oklch(0.93 0.006 240);
+  --sidebar-primary: oklch(0.72 0.125 65);
+  --sidebar-primary-foreground: oklch(0.22 0.02 60);
+  --sidebar-accent: oklch(0.31 0.02 244);
+  --sidebar-accent-foreground: oklch(0.97 0.004 240);
+  --sidebar-border: oklch(1 0 0 / 9%);
+  --sidebar-ring: oklch(0.6 0.05 200);
+}
+
+.dark {
+  --background: oklch(0.19 0.012 245);
+  --foreground: oklch(0.96 0.004 240);
+  --card: oklch(0.235 0.014 245);
+  --card-foreground: oklch(0.96 0.004 240);
+  --popover: oklch(0.235 0.014 245);
+  --popover-foreground: oklch(0.96 0.004 240);
+  --primary: oklch(0.72 0.09 200);
+  --primary-foreground: oklch(0.18 0.02 220);
+  --secondary: oklch(0.29 0.015 245);
+  --secondary-foreground: oklch(0.96 0.004 240);
+  --muted: oklch(0.29 0.015 245);
+  --muted-foreground: oklch(0.72 0.012 240);
+  --accent: oklch(0.75 0.12 65);
+  --accent-foreground: oklch(0.22 0.03 60);
+  --destructive: oklch(0.66 0.19 25);
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 16%);
+  --ring: oklch(0.6 0.06 200);
+  --chart-1: oklch(0.65 0.09 200);
+  --chart-2: oklch(0.78 0.13 68);
+  --chart-3: oklch(0.65 0.06 250);
+  --chart-4: oklch(0.72 0.09 150);
+  --chart-5: oklch(0.8 0.05 90);
+  --sidebar: oklch(0.18 0.014 245);
+  --sidebar-foreground: oklch(0.93 0.006 240);
+  --sidebar-primary: oklch(0.75 0.12 65);
+  --sidebar-primary-foreground: oklch(0.22 0.02 60);
+  --sidebar-accent: oklch(0.28 0.018 245);
+  --sidebar-accent-foreground: oklch(0.97 0.004 240);
+  --sidebar-border: oklch(1 0 0 / 9%);
+  --sidebar-ring: oklch(0.6 0.05 200);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family:
+      "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+      "Helvetica Neue", Arial, sans-serif;
+    font-feature-settings: "cv11", "ss01";
+    letter-spacing: -0.011em;
+  }
+  button:not([disabled]),
+  [role="button"]:not([disabled]) {
+    cursor: pointer;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    letter-spacing: -0.025em;
+  }
+  ::selection {
+    background: oklch(0.44 0.072 202 / 0.18);
+  }
+}
+
+@layer components {
+  /* Tarjeta con capas suaves: borde fino + sombra amplia y baja. */
+  .surface-card {
+    @apply rounded-2xl border border-border/80 bg-card;
+    box-shadow:
+      0 1px 2px oklch(0.24 0.014 250 / 0.04),
+      0 18px 40px -32px oklch(0.24 0.014 250 / 0.35);
+  }
+
+  .eyebrow {
+    @apply text-[11px] font-semibold uppercase tracking-[0.16em] text-muted-foreground;
+  }
+
+  /* Retícula técnica muy tenue para fondos de sección. */
+  .blueprint {
+    background-image:
+      linear-gradient(to right, oklch(0.44 0.072 202 / 0.07) 1px, transparent 1px),
+      linear-gradient(to bottom, oklch(0.44 0.072 202 / 0.07) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+
+  .blueprint-dark {
+    background-image:
+      linear-gradient(to right, oklch(1 0 0 / 0.045) 1px, transparent 1px),
+      linear-gradient(to bottom, oklch(1 0 0 / 0.045) 1px, transparent 1px);
+    background-size: 36px 36px;
+  }
+
+  /* Documento A4 en pantalla. En impresión el papel lo pone el navegador. */
+  .doc-page {
+    @apply mx-auto w-full max-w-[820px] bg-white px-10 py-12 text-[13px] leading-relaxed text-[#1d232b];
+    box-shadow:
+      0 1px 2px oklch(0.24 0.014 250 / 0.06),
+      0 30px 60px -40px oklch(0.24 0.014 250 / 0.45);
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .doc-page h1,
+  .doc-page h2,
+  .doc-page h3 {
+    letter-spacing: -0.01em;
+  }
+
+  .doc-table {
+    @apply w-full border-collapse text-[11.5px];
+  }
+  .doc-table th {
+    @apply border-b border-[#cfd6dd] bg-[#f4f6f7] px-2 py-1.5 text-left font-semibold uppercase tracking-wide text-[#48535f];
+    font-size: 9.5px;
+  }
+  .doc-table td {
+    @apply border-b border-[#e4e8ec] px-2 py-1.5 align-top;
+  }
+
+  .field-highlight {
+    animation: fieldPulse 1.6s ease-out 1;
+    border-radius: 0.5rem;
+    outline: 2px solid oklch(0.72 0.125 65 / 0.9);
+    outline-offset: 3px;
+  }
+
+  .num {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@keyframes fieldPulse {
+  0% {
+    outline-color: oklch(0.72 0.125 65 / 0.1);
+  }
+  35% {
+    outline-color: oklch(0.72 0.125 65 / 1);
+  }
+  100% {
+    outline-color: oklch(0.72 0.125 65 / 0.35);
+  }
+}
+
+@keyframes riseIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.rise-in {
+  animation: riseIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* ── Impresión / PDF ───────────────────────────────────────────────────── */
+@media print {
+  @page {
+    size: A4;
+    margin: 15mm 14mm;
+  }
+
+  html,
+  body {
+    background: #fff !important;
+    color: #111 !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .doc-page {
+    max-width: none !important;
+    width: auto !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+    font-size: 10.5pt;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Evita cortes feos en cabeceras y tablas */
+  .doc-table tr {
+    break-inside: avoid;
+  }
+
+  .doc-section {
+    break-inside: avoid;
+  }
+
+  .doc-page-break {
+    break-before: page;
+  }
+
+  /* Tipografía de impresión: los px de pantalla se convierten en cuerpo
+     legible de documento técnico (≈9 pt) sin alterar la vista previa. */
+  .doc-page p,
+  .doc-page li,
+  .doc-page dt,
+  .doc-page dd {
+    font-size: 9pt;
+    line-height: 1.45;
+  }
+
+  .doc-page .doc-table {
+    font-size: 8pt;
+  }
+
+  .doc-page .doc-table th {
+    font-size: 7pt;
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+}
