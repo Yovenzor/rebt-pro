@@ -114,20 +114,20 @@ export default function Auth({ redirectAfterAuth }: AuthProps = {}) {
 
         <div className="relative mt-auto mb-auto max-w-md py-16">
           <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-sidebar-primary">
-            REBT · ITC-BT-25
+            Documentación REBT · para instaladores
           </p>
           <h1 className="mt-4 text-[34px] font-semibold leading-[1.12] tracking-tight text-white">
-            Tus instalaciones, calculadas y documentadas en un solo lugar.
+            El papeleo de la instalación, resuelto.
           </h1>
           <p className="mt-4 text-[13px] leading-6 text-white/50">
-            Proyectos guardados, circuitos dimensionados y memoria técnica lista
-            para entregar. Sin hojas de cálculo sueltas ni valores inventados.
+            Diseña los circuitos, revisa lo que no cuadra y descarga la memoria.
+            En el despacho o en la obra, con los cálculos a la vista.
           </p>
 
           <ul className="mt-8 space-y-3">
             {[
-              "Circuitos C1-C12 con secciones y protecciones coordinadas",
-              "Caídas de tensión y puesta a tierra comprobadas",
+              "Circuitos C1 a C12 con secciones y protecciones coordinadas",
+              "Caídas de tensión, cuadro y puesta a tierra comprobados",
               "Memoria A4 con fórmulas, tablas y referencias normativas",
             ].map((t) => (
               <li key={t} className="flex items-start gap-2.5 text-[12px] text-white/65">
@@ -156,11 +156,11 @@ export default function Auth({ redirectAfterAuth }: AuthProps = {}) {
               <>
                 <p className="eyebrow">Acceso</p>
                 <h2 className="mt-2 text-[22px] font-semibold tracking-tight">
-                  Entra en REBT Pro
+                  Tu espacio de trabajo
                 </h2>
                 <p className="mt-1.5 text-[12.5px] leading-5 text-muted-foreground">
-                  Introduce tu correo y te enviaremos un código de acceso. Tu
-                  espacio de trabajo es privado.
+                  Escribe tu correo y te enviamos un código. Tus instalaciones
+                  quedan privadas en tu cuenta.
                 </p>
 
                 <form onSubmit={handleEmailSubmit} className="mt-6 space-y-3">
@@ -205,12 +205,12 @@ export default function Auth({ redirectAfterAuth }: AuthProps = {}) {
                   disabled={isLoading}
                 >
                   <UserRound className="size-4" />
-                  Acceso de prueba como invitado
+                  Probar sin cuenta
                 </Button>
 
                 <p className="mt-4 text-[10.5px] leading-4 text-muted-foreground">
-                  El acceso de invitado crea una sesión temporal para probar la
-                  herramienta sin configurar el correo.
+                  El acceso de invitado crea una sesión temporal para que puedas
+                  tocar la herramienta sin configurar el correo.
                 </p>
               </>
             ) : (
@@ -230,10 +230,10 @@ export default function Auth({ redirectAfterAuth }: AuthProps = {}) {
 
                 <p className="eyebrow">Verificación</p>
                 <h2 className="mt-2 text-[22px] font-semibold tracking-tight">
-                  Revisa tu correo
+                  Mira tu correo
                 </h2>
                 <p className="mt-1.5 text-[12.5px] leading-5 text-muted-foreground">
-                  Hemos enviado un código de 6 dígitos a{" "}
+                  Te hemos enviado un código de seis dígitos a{" "}
                   <span className="font-medium text-foreground">{step.email}</span>.
                 </p>
 
@@ -280,7 +280,7 @@ export default function Auth({ redirectAfterAuth }: AuthProps = {}) {
             <Link to="/" className="hover:text-foreground">
               ← Volver al inicio
             </Link>
-            <span>REBT Pro · v1</span>
+            <span>REBT Pro · Documentación REBT</span>
           </div>
         </div>
       </main>

@@ -46,15 +46,15 @@ const SECCIONES: { id: SeccionId; label: string; icon: NavItem["icon"] }[] = [
 ];
 
 const TITULOS: Record<SeccionId, { titulo: string; eyebrow: string }> = {
-  resumen: { titulo: "Resumen del proyecto", eyebrow: "Panel general" },
-  datos: { titulo: "Datos y suministro", eyebrow: "Proyecto" },
+  resumen: { titulo: "Resumen de la instalación", eyebrow: "Tu instalación" },
+  datos: { titulo: "Datos y suministro", eyebrow: "La instalación" },
   electrificacion: { titulo: "Grado de electrificación", eyebrow: "Asistente ITC-BT-25" },
   circuitos: { titulo: "Circuitos", eyebrow: "Configurador" },
   calculos: { titulo: "Cálculos eléctricos", eyebrow: "Motor de cálculo" },
   cuadro: { titulo: "Cuadro y protecciones", eyebrow: "Cuadro eléctrico" },
   tierra: { titulo: "Puesta a tierra", eyebrow: "ITC-BT-18" },
   validacion: { titulo: "Detector de errores", eyebrow: "Cumplimiento REBT" },
-  memoria: { titulo: "Memoria técnica", eyebrow: "Documentación" },
+  memoria: { titulo: "Memoria técnica", eyebrow: "El documento" },
 };
 
 export default function ProjectEditor() {
@@ -95,7 +95,7 @@ export default function ProjectEditor() {
         setGuardado("guardado");
       } catch {
         setGuardado("error");
-        toast.error("No se pudo guardar el proyecto.");
+        toast.error("No se pudo guardar la instalación.");
       }
     }, 700);
     return () => clearTimeout(timer);
@@ -178,12 +178,14 @@ export default function ProjectEditor() {
   if (data === null || !draft || !resultado) {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center gap-4 bg-background px-6 text-center">
-        <p className="text-[16px] font-semibold">Proyecto no disponible</p>
+        <p className="text-[16px] font-semibold">Instalación no disponible</p>
         <p className="max-w-sm text-[12.5px] text-muted-foreground">
-          El proyecto no existe o pertenece a otra cuenta. Vuelve a la lista de
-          proyectos para continuar.
+          La instalación no existe o pertenece a otra cuenta. Vuelve a tu lista
+          de instalaciones para continuar.
         </p>
-        <Button onClick={() => navigate("/projects")}>Volver a proyectos</Button>
+        <Button onClick={() => navigate("/projects")}>
+          Volver a instalaciones
+        </Button>
       </div>
     );
   }
@@ -194,7 +196,7 @@ export default function ProjectEditor() {
     <AppShell
       navItems={navItems}
       active={seccion}
-      navLabel="Proyecto"
+      navLabel="Instalación"
       onNavigate={(destino) => irA(destino as SeccionId)}
       eyebrow={meta.eyebrow}
       title={meta.titulo}
@@ -213,17 +215,12 @@ export default function ProjectEditor() {
               )}
             />
             {guardado === "guardado"
-              ? "Guardado"
+              ? "Todo guardado"
               : guardado === "guardando"
                 ? "Guardando…"
                 : "Sin guardar"}
           </span>
-          <Button
-            variant="outline"
-            size="sm"
-            className="gap-1.5"
-            onClick={irAMemoria}
-          >
+          <Button size="sm" className="gap-1.5" onClick={irAMemoria}>
             <FileText className="size-3.5" />
             <span className="hidden sm:inline">Memoria</span> PDF
           </Button>
@@ -309,7 +306,10 @@ export default function ProjectEditor() {
               <h2 className="mt-2 text-[22px] font-semibold tracking-tight">
                 Memoria técnica de diseño
               </h2>
-              <p className="mt-2 text-[13px] leading-6 text-muted-foreground">
+              <p className="mt-1 text-[12.5px] text-muted-foreground">
+                El manual de la instalación, en A4 y listo para entregar.
+              </p>
+              <p className="mt-3 text-[13px] leading-6 text-muted-foreground">
                 Documento A4 con la identificación del titular, la normativa
                 aplicada, el grado de electrificación, la previsión de cargas, los
                 circuitos, los cálculos de intensidades y secciones, las caídas de
@@ -339,7 +339,7 @@ export default function ProjectEditor() {
               <div className="mt-6 flex flex-col gap-2 sm:flex-row">
                 <Button className="gap-2" onClick={irAMemoria}>
                   <FileText className="size-4" />
-                  Previsualizar y descargar
+                  Ver y descargar el PDF
                 </Button>
                 <Button
                   variant="outline"
@@ -364,7 +364,7 @@ export default function ProjectEditor() {
                 <li className="flex gap-2">
                   <Landmark className="mt-0.5 size-4 shrink-0 text-primary" />
                   {resultado.tierra.resistenciaVerificada !== null
-                    ? "Resistencia de tierra medida e incorporada al proyecto."
+                    ? "Resistencia de tierra medida e incorporada a la instalación."
                     : "La resistencia de tierra aún no está medida: la memoria lo indicará como dato pendiente."}
                 </li>
                 <li className="flex gap-2">

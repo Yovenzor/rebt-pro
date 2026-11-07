@@ -1,7 +1,7 @@
 {
-  "name": "REBT Pro · Memoria técnica de instalaciones eléctricas",
+  "name": "REBT Pro · Documentación REBT para instalaciones eléctricas",
   "short_name": "REBT Pro",
-  "description": "Cálculo de instalaciones eléctricas de vivienda y generación de la memoria técnica conforme al REBT.",
+  "description": "Cálculo de instalaciones eléctricas de vivienda y generación de la documentación REBT en PDF.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#faf9f6",

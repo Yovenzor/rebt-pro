@@ -29,6 +29,7 @@ import { useMutation, useQuery } from "convex/react";
 import {
   ArrowRight,
   Copy,
+  FileText,
   FolderOpen,
   House,
   Loader2,
@@ -39,11 +40,11 @@ import {
   Zap,
 } from "lucide-react";
 import { useState } from "react";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { toast } from "sonner";
 
 const navItems: NavItem[] = [
-  { id: "proyectos", label: "Proyectos", icon: FolderOpen },
+  { id: "proyectos", label: "Instalaciones", icon: FolderOpen },
 ];
 
 export default function Projects() {
@@ -80,10 +81,10 @@ export default function Projects() {
         tipoVivienda: form.tipoVivienda,
       });
       const id = await create({ data });
-      toast.success("Proyecto creado");
+      toast.success("Instalación creada");
       navigate(`/projects/${id}`);
     } catch {
-      toast.error("No se pudo crear el proyecto. Inténtalo de nuevo.");
+      toast.error("No se pudo crear la instalación. Inténtalo de nuevo.");
     } finally {
       setSaving(false);
     }
@@ -92,9 +93,9 @@ export default function Projects() {
   const handleDuplicate = async (id: Id<"projects">) => {
     try {
       await duplicate({ id });
-      toast.success("Proyecto duplicado");
+      toast.success("Instalación duplicada");
     } catch {
-      toast.error("No se pudo duplicar el proyecto.");
+      toast.error("No se pudo duplicar la instalación.");
     }
   };
 
@@ -102,9 +103,9 @@ export default function Projects() {
     if (!borrar) return;
     try {
       await remove({ id: borrar });
-      toast.success("Proyecto eliminado");
+      toast.success("Instalación eliminada");
     } catch {
-      toast.error("No se pudo eliminar el proyecto.");
+      toast.error("No se pudo eliminar la instalación.");
     } finally {
       setBorrar(null);
     }
@@ -117,18 +118,18 @@ export default function Projects() {
       navItems={navItems}
       active="proyectos"
       onNavigate={() => undefined}
-      navLabel="Espacio de trabajo"
-      eyebrow="Espacio de trabajo"
-      title="Proyectos"
+      navLabel="Tu espacio de trabajo"
+      eyebrow="Documentación REBT"
+      title="Tus instalaciones"
       subtitle={
         user?.name
-          ? `${user.name} · instalaciones eléctricas de vivienda`
-          : "Instalaciones eléctricas de vivienda"
+          ? `${user.name} · Documentación REBT de viviendas`
+          : "Documentación REBT de tus viviendas"
       }
       actions={
         <Button size="sm" className="gap-1.5" onClick={() => setOpen(true)}>
           <Plus className="size-4" />
-          Nuevo proyecto
+          Nueva instalación
         </Button>
       }
     >
@@ -136,7 +137,7 @@ export default function Projects() {
         <div className="mb-6 grid gap-3 sm:grid-cols-3">
           <div className="surface-card p-4">
             <p className="text-[10.5px] font-medium uppercase tracking-[0.12em] text-muted-foreground">
-              Proyectos
+              Instalaciones
             </p>
             <p className="mt-1.5 text-[24px] font-semibold tabular-nums leading-none">
               {cargando ? "—" : projects.length}
@@ -160,7 +161,7 @@ export default function Projects() {
                 Documento
               </p>
               <p className="mt-1.5 text-[13px] font-medium">
-                Memoria técnica en PDF
+                Memoria y cálculos en PDF
               </p>
             </div>
             <span className="flex size-9 items-center justify-center rounded-lg bg-accent/15 text-accent-foreground">
@@ -179,7 +180,7 @@ export default function Projects() {
               <House className="size-6" />
             </span>
             <h2 className="mt-5 text-[18px] font-semibold">
-              Tu primer proyecto empieza aquí
+              Tu primera instalación empieza aquí
             </h2>
             <p className="mt-2 max-w-md text-[13px] leading-6 text-muted-foreground">
               Crea la instalación, añade los circuitos de la ITC-BT-25 y genera
@@ -187,7 +188,7 @@ export default function Projects() {
             </p>
             <Button className="mt-6 gap-1.5" onClick={() => setOpen(true)}>
               <Plus className="size-4" />
-              Crear proyecto
+              Crear instalación
             </Button>
           </div>
         ) : (
@@ -201,15 +202,20 @@ export default function Projects() {
                 )}
               >
                 <div className="flex items-start justify-between gap-3">
-                  <div className="min-w-0">
-                    <p className="truncate text-[15px] font-semibold leading-5">
-                      {p.nombre}
-                    </p>
-                    <p className="mt-1 truncate text-[12px] text-muted-foreground">
-                      {p.cliente || "Cliente sin definir"}
-                    </p>
+                  <div className="flex min-w-0 items-start gap-3">
+                    <span className="mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-lg bg-[#e4f1f0] text-[#1d5b5d]">
+                      <House className="size-4" />
+                    </span>
+                    <div className="min-w-0">
+                      <p className="truncate text-[15px] font-semibold leading-5">
+                        {p.nombre}
+                      </p>
+                      <p className="mt-1 truncate text-[12px] text-muted-foreground">
+                        {p.cliente || "Cliente sin definir"}
+                      </p>
+                    </div>
                   </div>
-                  <span className="shrink-0 rounded-md bg-muted px-2 py-1 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
+                  <span className="shrink-0 rounded-md bg-accent/15 px-2 py-1 text-[10px] font-medium uppercase tracking-wider text-accent-foreground">
                     {p.tipoVivienda || "Vivienda"}
                   </span>
                 </div>
@@ -235,7 +241,7 @@ export default function Projects() {
                       variant="ghost"
                       size="icon-sm"
                       title="Duplicar"
-                      aria-label="Duplicar proyecto"
+                      aria-label="Duplicar instalación"
                       onClick={() => handleDuplicate(p._id)}
                     >
                       <Copy className="size-3.5" />
@@ -244,21 +250,34 @@ export default function Projects() {
                       variant="ghost"
                       size="icon-sm"
                       title="Eliminar"
-                      aria-label="Eliminar proyecto"
+                      aria-label="Eliminar instalación"
                       onClick={() => setBorrar(p._id)}
                     >
                       <Trash2 className="size-3.5 text-muted-foreground" />
                     </Button>
                   </div>
-                  <Button
-                    size="sm"
-                    variant="ghost"
-                    className="gap-1 text-primary hover:text-primary"
-                    onClick={() => navigate(`/projects/${p._id}`)}
-                  >
-                    Abrir proyecto
-                    <ArrowRight className="size-3.5" />
-                  </Button>
+                  <div className="flex items-center gap-1">
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      className="gap-1 text-primary hover:text-primary"
+                      onClick={() => navigate(`/projects/${p._id}`)}
+                    >
+                      Abrir
+                      <ArrowRight className="size-3.5" />
+                    </Button>
+                    <Button
+                      asChild
+                      size="sm"
+                      variant="outline"
+                      className="h-8 gap-1.5"
+                    >
+                      <Link to={`/projects/${p._id}/memoria`}>
+                        <FileText className="size-3.5" />
+                        PDF
+                      </Link>
+                    </Button>
+                  </div>
                 </div>
               </div>
             ))}
@@ -269,10 +288,10 @@ export default function Projects() {
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="sm:max-w-lg">
           <DialogHeader>
-            <DialogTitle>Nuevo proyecto</DialogTitle>
+            <DialogTitle>Nueva instalación</DialogTitle>
             <DialogDescription>
-              Datos mínimos para crear la instalación. Podrás completar el resto
-              dentro del proyecto.
+              Con estos datos ya podemos empezar. El resto se completa dentro de
+              la instalación, sin prisa y sin perder nada.
             </DialogDescription>
           </DialogHeader>
 
@@ -331,8 +350,8 @@ export default function Projects() {
               </div>
             </div>
             <p className="rounded-lg bg-muted/60 px-3 py-2.5 text-[11.5px] leading-5 text-muted-foreground">
-              Con más de 160 m² el proyecto se crea directamente con
-              electrificación elevada y los circuitos C1 a C7 de la ITC-BT-25.
+              Las viviendas de más de 160 m² se crean ya con electrificación
+              elevada y los circuitos C1 a C7 de la ITC-BT-25.
             </p>
           </div>
 
@@ -342,7 +361,7 @@ export default function Projects() {
             </Button>
             <Button onClick={handleCreate} disabled={saving} className="gap-2">
               {saving && <Loader2 className="size-4 animate-spin" />}
-              Crear proyecto
+              Crear instalación
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -351,9 +370,9 @@ export default function Projects() {
       <AlertDialog open={borrar !== null} onOpenChange={() => setBorrar(null)}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>¿Eliminar el proyecto?</AlertDialogTitle>
+            <AlertDialogTitle>¿Eliminar la instalación?</AlertDialogTitle>
             <AlertDialogDescription>
-              Se eliminarán la instalación, los circuitos y la documentación
+              Se eliminarán la instalación, sus circuitos y la documentación
               asociada. Esta acción no se puede deshacer.
             </AlertDialogDescription>
           </AlertDialogHeader>

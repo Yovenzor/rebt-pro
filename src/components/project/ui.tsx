@@ -26,7 +26,12 @@ export function SectionHeader({
   return (
     <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
       <div>
-        {eyebrow && <p className="eyebrow mb-1.5">{eyebrow}</p>}
+        {eyebrow && (
+          <p className="eyebrow mb-1.5 flex items-center gap-1.5">
+            <span className="size-1.5 rounded-full bg-accent" />
+            {eyebrow}
+          </p>
+        )}
         <h2 className="text-[22px] font-semibold tracking-tight">{title}</h2>
         {description && (
           <p className="mt-1 max-w-2xl text-[13px] leading-6 text-muted-foreground">
@@ -305,7 +310,19 @@ export function Stat({
   tone?: "default" | "primary" | "warning" | "danger";
 }) {
   return (
-    <div className="surface-card p-4">
+    <div className="surface-card relative overflow-hidden p-4">
+      <span
+        className={cn(
+          "absolute inset-x-0 top-0 h-[2px]",
+          tone === "primary"
+            ? "bg-primary/70"
+            : tone === "warning"
+              ? "bg-accent"
+              : tone === "danger"
+                ? "bg-destructive/70"
+                : "bg-border",
+        )}
+      />
       <p className="text-[10.5px] font-medium uppercase tracking-[0.12em] text-muted-foreground">
         {label}
       </p>

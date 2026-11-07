@@ -110,6 +110,7 @@ export function AppShell({
 
   const sidebarBody = (
     <>
+      <div className="h-[2px] shrink-0 bg-gradient-to-r from-[#3f8f8a] via-accent to-[#7fae8e]" />
       <div className="px-5 pb-5 pt-6">
         <Brand href="/projects" />
       </div>
@@ -154,7 +155,7 @@ export function AppShell({
           </button>
         </div>
         <p className="px-2 pt-1 text-[10px] leading-relaxed text-white/25">
-          Cálculos conforme al REBT · RD 842/2002
+          Documentación REBT · RD 842/2002
         </p>
       </div>
     </>

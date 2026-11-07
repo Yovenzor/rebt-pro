@@ -55,7 +55,7 @@ export function ResumenPanel({
     <div>
       <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="eyebrow">Panel general</p>
+          <p className="eyebrow">Tu instalación</p>
           <h2 className="mt-1.5 text-[24px] font-semibold tracking-tight">
             {proyecto.nombre || "Instalación sin nombre"}
           </h2>
@@ -67,7 +67,7 @@ export function ResumenPanel({
         </div>
         <Button className="gap-2" onClick={onMemoria}>
           <FileText className="size-4" />
-          Generar memoria técnica
+          Generar el PDF
         </Button>
       </div>
 
@@ -217,14 +217,14 @@ export function ResumenPanel({
             {resumen.puedeValidar ? (
               <span className="flex items-start gap-2">
                 <CheckCircle2 className="mt-0.5 size-3.5 shrink-0" />
-                No hay errores críticos ni datos pendientes. La instalación puede
-                documentarse como conforme a las comprobaciones realizadas.
+                Todo listo para documentar. No hay errores críticos ni datos
+                pendientes en las comprobaciones realizadas.
               </span>
             ) : (
               <span className="flex items-start gap-2">
                 <AlertTriangle className="mt-0.5 size-3.5 shrink-0" />
                 {resumen.criticos + resumen.incumplimientos > 0
-                  ? "Existen incumplimientos sin resolver. La memoria se generará marcando expresamente las comprobaciones no superadas."
+                  ? "Hay incumplimientos sin resolver. El PDF se generará indicando expresamente lo que no cumple."
                   : "Faltan datos para poder declarar la conformidad de la instalación."}
               </span>
             )}
@@ -264,7 +264,7 @@ export function ResumenPanel({
         <div className="flex items-center justify-between gap-3">
           <h3 className="flex items-center gap-2 text-[13.5px] font-semibold">
             <CircuitBoard className="size-4 text-primary" />
-            Puntos que requieren atención
+            Lo que pide atención
           </h3>
           <button
             type="button"
@@ -279,7 +279,7 @@ export function ResumenPanel({
         {hallazgos.length === 0 ? (
           <p className="mt-4 flex items-center gap-2 rounded-lg bg-primary/8 px-3 py-3 text-[11.5px] text-primary">
             <CheckCircle2 className="size-4" />
-            No hay incidencias detectadas en el proyecto.
+            Nada pendiente: los cálculos y las comprobaciones cuadran.
           </p>
         ) : (
           <ul className="mt-3 divide-y divide-border/70">

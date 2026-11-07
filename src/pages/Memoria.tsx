@@ -48,9 +48,11 @@ export default function Memoria() {
       <div className="flex min-h-screen flex-col items-center justify-center gap-4 bg-[#eef1f3] px-6 text-center">
         <p className="text-[16px] font-semibold">Memoria no disponible</p>
         <p className="max-w-sm text-[12.5px] text-muted-foreground">
-          El proyecto no existe o no tienes acceso a él.
+          La instalación no existe o no tienes acceso a ella.
         </p>
-        <Button onClick={() => navigate("/projects")}>Volver a proyectos</Button>
+        <Button onClick={() => navigate("/projects")}>
+          Volver a instalaciones
+        </Button>
       </div>
     );
   }
@@ -62,7 +64,7 @@ export default function Memoria() {
           <Button asChild variant="ghost" size="sm" className="gap-1.5">
             <Link to={`/projects/${projectId}`}>
               <ArrowLeft className="size-4" />
-              Proyecto
+              Instalación
             </Link>
           </Button>
 

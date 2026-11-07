@@ -35,7 +35,7 @@ export function BrandMark({
 }
 
 export function Brand({
-  subtitle = "Memoria técnica REBT",
+  subtitle = "Documentación REBT",
   tone = "light",
   href,
 }: {

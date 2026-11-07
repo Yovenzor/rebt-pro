@@ -9,7 +9,7 @@ export default function NotFound() {
       <div className="pointer-events-none absolute inset-0 blueprint opacity-60" />
       <header className="relative border-b border-border/60">
         <div className="mx-auto flex h-16 w-full max-w-5xl items-center px-5">
-          <Brand tone="dark" subtitle="Cálculo y memoria REBT" />
+          <Brand tone="dark" subtitle="Documentación REBT" />
         </div>
       </header>
 

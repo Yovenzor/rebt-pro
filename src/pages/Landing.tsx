@@ -14,7 +14,6 @@ import {
   Landmark,
   Ruler,
   ShieldCheck,
-  Sparkles,
   Zap,
 } from "lucide-react";
 import { Link } from "react-router";
@@ -37,89 +36,111 @@ const circuitosDemo = [
 const pasos = [
   {
     n: "01",
-    titulo: "Datos de la vivienda",
+    titulo: "Cuéntanos la vivienda",
     texto:
-      "Superficie, estancias, suministro y receptores previstos. La app deduce el grado de electrificación y la potencia mínima exigible.",
+      "Superficie, estancias, suministro y receptores. La app deduce el grado de electrificación y la potencia mínima que exige la ITC-BT-25.",
     icon: Ruler,
+    tone: "teal",
   },
   {
     n: "02",
-    titulo: "Circuitos y protecciones",
+    titulo: "Diseña los circuitos",
     texto:
-      "Parte de los circuitos C1-C12 de la ITC-BT-25 y añade receptores especiales. Cada cambio recalcula secciones, calibres y caídas.",
+      "Parte de los circuitos C1 a C12, añade receptores especiales y ajusta lo que necesites. Las secciones y protecciones se recalculan solas.",
     icon: CircuitBoard,
+    tone: "copper",
   },
   {
     n: "03",
-    titulo: "Comprobación normativa",
+    titulo: "Revisa sin sorpresas",
     texto:
-      "El detector revisa coordinación protección-conductor, caídas, diferenciales, agrupaciones y tierra, y te lleva al campo exacto.",
+      "El detector te dice qué falla, con qué norma choca y cómo arreglarlo. «IR AL ERROR» te deja delante del campo exacto.",
     icon: ShieldCheck,
+    tone: "green",
   },
   {
     n: "04",
-    titulo: "Memoria en PDF",
+    titulo: "Descarga el PDF",
     texto:
-      "Documento A4 con datos, fórmulas, tablas de cálculo, esquema del cuadro y conclusiones. Listo para imprimir o archivar.",
+      "Memoria A4 con datos, fórmulas, tablas, protecciones, puesta a tierra y esquema del cuadro. Lista para imprimir o archivar.",
     icon: FileDown,
+    tone: "blue",
   },
 ];
 
 const funcionalidades = [
   {
     icon: Gauge,
-    titulo: "Grado de electrificación automático",
+    tono: "teal",
+    titulo: "Grado de electrificación, resuelto",
     texto:
-      "Básica 5.750 W o elevada 9.200 W según superficie, calefacción, climatización, automatización y potencia prevista, con los motivos indicados.",
+      "Básica o elevada según la ITC-BT-25, con los motivos a la vista. Nada de un número suelto que no puedas explicar.",
   },
   {
     icon: Calculator,
-    titulo: "Cálculos con la fórmula a la vista",
+    tono: "copper",
+    titulo: "Cálculos que puedes defender",
     texto:
-      "Intensidad de diseño, sección por intensidad admisible y por caída de tensión, factores de temperatura y agrupamiento. Sin cajas negras.",
+      "Fórmulas, tablas y factores de corrección. Todo lo necesario para justificar una sección delante de un cliente o una inspección.",
   },
   {
     icon: AlertTriangle,
-    titulo: "Detector con navegación al error",
+    tono: "clay",
+    titulo: "Errores con botón de arreglo",
     texto:
-      "Cada incumplimiento indica norma, valor actual, límite y solución. «IR AL ERROR» abre el circuito y resalta el campo que lo provoca.",
+      "Cada incidencia indica norma, valor actual y solución. Pulsa «IR AL ERROR» y el proyecto te lleva al dato que la provoca.",
   },
   {
     icon: Cable,
-    titulo: "Conductores y canalizaciones",
+    tono: "green",
+    titulo: "Cables y tubos, coordinados",
     texto:
-      "Fase, neutro y conductor de protección según ITC-BT-19 tabla 2, con diámetro de tubo y secciones normalizadas.",
+      "Fase, neutro y conductor de protección según la tabla 2 de la ITC-BT-19, con sección comercial y diámetro de tubo.",
   },
   {
     icon: Zap,
+    tono: "olive",
     titulo: "Cuadro y protecciones",
     texto:
-      "IGA calculado, diferenciales de 30 mA con máximo de cinco circuitos cada uno, magnetotérmicos coordinados con el conductor.",
+      "IGA, diferenciales de 30 mA y magnetotérmicos que encajan con el cable. Con el máximo de cinco circuitos por diferencial.",
   },
   {
     icon: Landmark,
-    titulo: "Puesta a tierra y memoria",
+    tono: "blue",
+    titulo: "Tierra y documento final",
     texto:
-      "Resistencia estimada o medida, coordinación R ≤ 50/IΔn y memoria técnica que declara las hipótesis y los datos pendientes.",
+      "Resistencia estimada o medida, coordinación R ≤ 50/IΔn y una memoria que declara sus hipótesis y sus datos pendientes.",
   },
 ];
+
+const tonos: Record<string, string> = {
+  teal: "bg-[#e4f1f0] text-[#1d5b5d]",
+  copper: "bg-[#fbefdf] text-[#8a5a1f]",
+  green: "bg-[#e7f4ec] text-[#23684a]",
+  blue: "bg-[#e8eef8] text-[#345783]",
+  clay: "bg-[#f9e9e3] text-[#9d4830]",
+  olive: "bg-[#f1f1e0] text-[#5c602e]",
+};
 
 export default function Landing() {
   return (
     <div className="min-h-screen bg-background">
+      {/* Barra de color de marca */}
+      <div className="h-[3px] bg-gradient-to-r from-primary via-accent to-[#7fae8e]" />
+
       {/* Barra superior */}
-      <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur-md">
+      <header className="sticky top-0 z-40 border-b border-border/60 bg-background/85 backdrop-blur-md">
         <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-5">
-          <Brand tone="dark" subtitle="Cálculo y memoria REBT" />
+          <Brand tone="dark" subtitle="Documentación REBT" />
           <nav className="hidden items-center gap-7 text-[13px] text-muted-foreground md:flex">
             <a href="#como-funciona" className="transition-colors hover:text-foreground">
               Cómo funciona
             </a>
             <a href="#calculos" className="transition-colors hover:text-foreground">
-              Cálculos
+              Los cálculos
             </a>
-            <a href="#alcance" className="transition-colors hover:text-foreground">
-              Alcance
+            <a href="#para-quien" className="transition-colors hover:text-foreground">
+              Para quién
             </a>
           </nav>
           <div className="flex items-center gap-2">
@@ -128,7 +149,7 @@ export default function Landing() {
             </Button>
             <Button asChild size="sm" className="gap-1.5">
               <Link to="/auth?returnTo=/projects">
-                Crear memoria
+                Crear mi memoria
                 <ArrowRight className="size-3.5" />
               </Link>
             </Button>
@@ -139,7 +160,8 @@ export default function Landing() {
       {/* Hero */}
       <section className="relative overflow-hidden border-b border-border/60">
         <div className="pointer-events-none absolute inset-0 blueprint opacity-[0.55]" />
-        <div className="pointer-events-none absolute -right-40 -top-32 size-[520px] rounded-full bg-accent/10 blur-3xl" />
+        <div className="pointer-events-none absolute -right-40 -top-32 size-[520px] rounded-full bg-accent/20 blur-3xl" />
+        <div className="pointer-events-none absolute -left-32 top-48 size-[440px] rounded-full bg-primary/10 blur-3xl" />
         <div className="relative mx-auto grid w-full max-w-6xl gap-12 px-5 py-16 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:py-24">
           <motion.div
             initial={{ opacity: 0, y: 18 }}
@@ -147,44 +169,29 @@ export default function Landing() {
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           >
             <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-[11px] font-medium text-muted-foreground">
-              <Sparkles className="size-3.5 text-accent-foreground/70" />
-              REBT · ITC-BT-19 · ITC-BT-25 · ITC-BT-18
+              <span className="size-1.5 rounded-full bg-accent" />
+              Documentación REBT · para instaladores
             </span>
 
-            <h1 className="mt-6 text-balance text-[2.6rem] font-semibold leading-[1.05] tracking-tight sm:text-[3.4rem]">
-              La memoria técnica de la vivienda,{" "}
-              <span className="relative whitespace-nowrap">
-                calculada
-                <svg
-                  className="absolute -bottom-1.5 left-0 h-2 w-full text-accent"
-                  viewBox="0 0 200 8"
-                  preserveAspectRatio="none"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M1 5.5C45 2.5 120 2 199 4"
-                    stroke="currentColor"
-                    strokeWidth="3"
-                    fill="none"
-                    strokeLinecap="round"
-                  />
-                </svg>
-              </span>{" "}
-              y lista en PDF.
+            <h1 className="mt-6 text-balance text-[2.4rem] font-semibold leading-[1.04] tracking-tight sm:text-[3.6rem]">
+              La documentación de la instalación, calculada y{" "}
+              <span className="relative inline-block whitespace-nowrap px-1">
+                <span className="absolute inset-x-0 bottom-[0.14em] h-[0.28em] -rotate-1 rounded-sm bg-accent/60" />
+                <span className="relative">en PDF</span>
+              </span>
+              .
             </h1>
 
             <p className="mt-6 max-w-xl text-[15px] leading-7 text-muted-foreground">
-              REBT Pro es la herramienta de trabajo del instalador: introduces
-              los datos de la vivienda, diseña los circuitos y obtienes las
-              secciones, las protecciones, las caídas de tensión y la memoria
-              técnica completa, con cada resultado trazado a su instrucción
-              técnica.
+              REBT Pro convierte los datos de una vivienda en la memoria técnica
+              completa: circuitos, secciones, protecciones, puesta a tierra y
+              esquemas. Tú decides; la app hace las cuentas.
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Button asChild size="lg" className="gap-2">
                 <Link to="/auth?returnTo=/projects">
-                  Crear mi primera memoria
+                  Crear mi memoria
                   <ArrowRight className="size-4" />
                 </Link>
               </Button>
@@ -195,9 +202,9 @@ export default function Landing() {
 
             <ul className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-[12.5px] text-muted-foreground">
               {[
-                "Sin instalación",
-                "Cálculos auditables",
-                "Documento A4 en PDF",
+                "Funciona en el navegador",
+                "Cada cifra, con su norma",
+                "A4 listo para imprimir",
               ].map((t) => (
                 <li key={t} className="flex items-center gap-1.5">
                   <Check className="size-3.5 text-primary" />
@@ -214,15 +221,15 @@ export default function Landing() {
             transition={{ duration: 0.7, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
             className="relative"
           >
-            <div className="absolute -inset-3 rounded-[26px] bg-gradient-to-br from-primary/10 via-transparent to-accent/15 blur-xl" />
+            <div className="absolute -inset-3 rounded-[26px] bg-gradient-to-br from-primary/15 via-transparent to-accent/25 blur-xl" />
             <div className="relative overflow-hidden rounded-2xl border border-sidebar-border bg-sidebar text-sidebar-foreground shadow-[0_40px_80px_-40px_rgba(15,32,45,0.55)]">
               <div className="flex items-center justify-between border-b border-white/10 px-5 py-3.5">
                 <div className="flex items-center gap-2 text-[11px] text-white/50">
                   <span className="size-1.5 rounded-full bg-emerald-400" />
-                  Proyecto guardado
+                  Todo guardado
                 </div>
                 <span className="rounded-md bg-white/10 px-2 py-0.5 text-[10px] uppercase tracking-wider text-white/60">
-                  Vista de cálculo
+                  Proyecto de ejemplo
                 </span>
               </div>
 
@@ -293,9 +300,7 @@ export default function Landing() {
                     <ShieldCheck className="size-3.5" />
                     Coordinación y caídas conformes
                   </span>
-                  <span className="text-[10px] text-emerald-200/60">
-                    ITC-BT-25
-                  </span>
+                  <span className="text-[10px] text-emerald-200/60">ITC-BT-25</span>
                 </div>
               </div>
             </div>
@@ -303,18 +308,22 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* Normativa / confianza */}
+      {/* Normativa */}
       <section className="border-b border-border/60 bg-card/60">
         <div className="mx-auto flex w-full max-w-6xl flex-col gap-4 px-5 py-6 sm:flex-row sm:items-center sm:justify-between">
-          <p className="eyebrow shrink-0">Trabaja con las tablas oficiales</p>
-          <div className="flex flex-wrap items-center gap-x-8 gap-y-2 text-[12px] text-muted-foreground">
-            <span>ITC-BT-19 · intensidades admisibles</span>
-            <span className="hidden sm:inline text-border">|</span>
-            <span>ITC-BT-25 · circuitos de vivienda</span>
-            <span className="hidden sm:inline text-border">|</span>
-            <span>ITC-BT-18 · puesta a tierra</span>
-            <span className="hidden sm:inline text-border">|</span>
-            <span>Guía técnica del REBT</span>
+          <p className="eyebrow shrink-0">Las tablas oficiales, ya cargadas</p>
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-[12px] text-muted-foreground">
+            {[
+              ["bg-primary", "ITC-BT-19 · intensidades"],
+              ["bg-accent", "ITC-BT-25 · circuitos"],
+              ["bg-[#7fae8e]", "ITC-BT-18 · tierra"],
+              ["bg-[#8fa7c4]", "Guía técnica del REBT"],
+            ].map(([color, texto]) => (
+              <span key={texto} className="inline-flex items-center gap-2">
+                <span className={`size-1.5 rounded-full ${color}`} />
+                {texto}
+              </span>
+            ))}
           </div>
         </div>
       </section>
@@ -323,13 +332,13 @@ export default function Landing() {
       <section id="como-funciona" className="mx-auto w-full max-w-6xl px-5 py-20">
         <motion.div {...fadeUp} className="max-w-2xl">
           <p className="eyebrow">Del dato al documento</p>
-          <h2 className="mt-3 text-3xl font-semibold tracking-tight sm:text-[2.1rem]">
-            Cuatro pasos, un único proyecto conectado
+          <h2 className="mt-3 text-3xl font-semibold tracking-tight sm:text-[2.25rem]">
+            Cuatro pasos y un PDF.
           </h2>
           <p className="mt-3 text-[14.5px] leading-7 text-muted-foreground">
-            No hay cálculos aislados ni hojas sueltas: todo lo que cambias se
-            propaga a los circuitos, al cuadro, al presupuesto de materiales y a
-            la memoria.
+            Todo vive en el mismo proyecto: si cambias una potencia, se
+            actualizan la sección, la protección, la caída de tensión y el
+            documento. Sin copiar cifras de una hoja a otra.
           </p>
         </motion.div>
 
@@ -344,10 +353,12 @@ export default function Landing() {
                 className="surface-card group relative p-5 transition-transform duration-300 hover:-translate-y-0.5"
               >
                 <div className="flex items-center justify-between">
-                  <span className="flex size-9 items-center justify-center rounded-lg bg-primary/8 text-primary">
+                  <span
+                    className={`flex size-9 items-center justify-center rounded-lg ${tonos[p.tone]}`}
+                  >
                     <Icon className="size-[17px]" />
                   </span>
-                  <span className="text-[11px] font-semibold tabular-nums text-muted-foreground/50">
+                  <span className="text-[12px] font-semibold tabular-nums text-muted-foreground/40">
                     {p.n}
                   </span>
                 </div>
@@ -366,21 +377,20 @@ export default function Landing() {
         <div className="mx-auto grid w-full max-w-6xl gap-10 px-5 py-20 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
           <motion.div {...fadeUp}>
             <p className="eyebrow">Trazabilidad</p>
-            <h2 className="mt-3 text-3xl font-semibold tracking-tight">
-              Cada cifra, con su fórmula y su tabla
+            <h2 className="mt-3 text-3xl font-semibold tracking-tight sm:text-[2.15rem]">
+              Cada cifra, explicada.
             </h2>
             <p className="mt-4 text-[14.5px] leading-7 text-muted-foreground">
-              El motor no esconde constantes. La memoria reproduce las
-              expresiones utilizadas, los valores de entrada y el criterio de la
-              instrucción técnica aplicable, para que el cálculo pueda
-              revisarse línea a línea.
+              Nada de resultados que aparecen por arte de magia. La memoria
+              reproduce la fórmula, los valores de partida y el criterio de la
+              instrucción técnica que la respalda.
             </p>
             <ul className="mt-6 space-y-3 text-[13px]">
               {[
-                "Intensidad: I = P / (U · cos φ · η) y I = P / (√3 · U · cos φ · η)",
-                "Sección por caída: ΔU = 2·L·I·cos φ / (γ·S) con γ = 48 m/(Ω·mm²)",
-                "Corrección por temperatura y agrupamiento sobre la tabla 1",
-                "Conductor de protección según ITC-BT-19 tabla 2",
+                "Intensidad: I = P / (U · cos φ · η) y I = P / (√3 · U · cos φ · η).",
+                "Sección por caída: ΔU = 2·L·I·cos φ / (γ·S), con γ = 48 m/(Ω·mm²).",
+                "Corrección por temperatura y agrupamiento sobre la tabla 1.",
+                "Conductor de protección según la tabla 2 de la ITC-BT-19.",
               ].map((t) => (
                 <li key={t} className="flex gap-2.5">
                   <Check className="mt-0.5 size-4 shrink-0 text-primary" />
@@ -391,12 +401,13 @@ export default function Landing() {
           </motion.div>
 
           <motion.div {...fadeUp} className="surface-card overflow-hidden">
+            <div className="h-1 bg-gradient-to-r from-primary via-accent to-[#7fae8e]" />
             <div className="flex items-center justify-between border-b border-border/70 px-5 py-3">
               <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
                 C2 · Tomas de uso general
               </span>
-              <span className="rounded-full bg-primary/8 px-2 py-0.5 text-[10px] font-medium text-primary">
-                Ejemplo verificado
+              <span className="rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-medium text-primary">
+                Ejemplo comprobado
               </span>
             </div>
             <div className="divide-y divide-border/70">
@@ -421,8 +432,8 @@ export default function Landing() {
             <div className="flex items-start gap-2.5 bg-primary/[0.04] px-5 py-3.5">
               <FileText className="mt-0.5 size-4 shrink-0 text-primary" />
               <p className="text-[11.5px] leading-5 text-muted-foreground">
-                Resultado coherente con el ejemplo de la Guía Técnica de
-                Aplicación del REBT (Anexo 2) para el mismo circuito.
+                Mismo resultado que el ejemplo de la Guía Técnica de Aplicación
+                del REBT (Anexo 2) para este circuito.
               </p>
             </div>
           </motion.div>
@@ -432,13 +443,13 @@ export default function Landing() {
       {/* Funcionalidades */}
       <section className="mx-auto w-full max-w-6xl px-5 py-20">
         <motion.div {...fadeUp} className="max-w-2xl">
-          <p className="eyebrow">Qué incluye</p>
-          <h2 className="mt-3 text-3xl font-semibold tracking-tight">
-            Diseñado para firmar, no para impresionar
+          <p className="eyebrow">Sin adornos</p>
+          <h2 className="mt-3 text-3xl font-semibold tracking-tight sm:text-[2.25rem]">
+            Lo que de verdad se usa en obra.
           </h2>
           <p className="mt-3 text-[14.5px] leading-7 text-muted-foreground">
-            Las funciones que un instalador usa de verdad al cerrar una
-            instalación de vivienda.
+            Las herramientas que hacen falta para cerrar una instalación de
+            vivienda, con la precisión que exige el reglamento.
           </p>
         </motion.div>
 
@@ -450,10 +461,12 @@ export default function Landing() {
                 key={f.titulo}
                 {...fadeUp}
                 transition={{ ...fadeUp.transition, delay: i * 0.05 }}
-                className="surface-card p-5"
+                className="surface-card group p-5 transition-transform duration-300 hover:-translate-y-0.5"
               >
-                <span className="flex size-9 items-center justify-center rounded-lg bg-accent/15 text-accent-foreground">
-                  <Icon className="size-[17px]" />
+                <span
+                  className={`flex size-10 items-center justify-center rounded-xl ${tonos[f.tono]}`}
+                >
+                  <Icon className="size-[18px]" />
                 </span>
                 <h3 className="mt-4 text-[14px] font-semibold">{f.titulo}</h3>
                 <p className="mt-1.5 text-[12.5px] leading-6 text-muted-foreground">
@@ -465,25 +478,27 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* Alcance / responsabilidad */}
-      <section id="alcance" className="border-t border-border/60 bg-card/50">
+      {/* Para quién */}
+      <section id="para-quien" className="border-t border-border/60 bg-card/50">
         <div className="mx-auto grid w-full max-w-6xl gap-10 px-5 py-16 lg:grid-cols-2">
           <div>
             <p className="eyebrow">Para quién es</p>
-            <h2 className="mt-3 text-2xl font-semibold tracking-tight">
-              Instaladores eléctricos que entregan documentación
+            <h2 className="mt-3 text-2xl font-semibold tracking-tight sm:text-[1.9rem]">
+              Para quien instala y para quien firma.
             </h2>
             <p className="mt-4 text-[14px] leading-7 text-muted-foreground">
-              Vivienda nueva, reforma con boletín o ampliación de potencia: la
-              memoria recoge el grado de electrificación, la previsión de
-              cargas, los circuitos, las protecciones y las verificaciones, sin
-              inventar ningún dato que no hayas introducido.
+              Vivienda nueva, reforma con boletín o ampliación de potencia. La
+              memoria recoge el grado de electrificación, la previsión de cargas,
+              los circuitos, las protecciones y las verificaciones, sin inventar
+              ningún dato que no hayas introducido.
             </p>
-            <div className="mt-6 rounded-xl border border-accent/30 bg-accent/[0.07] p-4">
+            <div className="mt-6 rounded-xl border border-accent/40 bg-accent/[0.08] p-4">
               <div className="flex items-start gap-2.5">
                 <AlertTriangle className="mt-0.5 size-4 shrink-0 text-accent-foreground/80" />
                 <div>
-                  <p className="text-[12.5px] font-semibold">Ingeniería, no magia</p>
+                  <p className="text-[12.5px] font-semibold">
+                    Ingeniería, no magia
+                  </p>
                   <p className="mt-1 text-[12px] leading-6 text-muted-foreground">
                     REBT Pro calcula y documenta. No sustituye la verificación en
                     obra, las mediciones, los ensayos ni la responsabilidad del
@@ -500,22 +515,26 @@ export default function Landing() {
               {
                 icon: CircuitBoard,
                 t: "Vivienda nueva",
-                d: "Circuitos C1-C12, grado de electrificación y memoria de diseño.",
+                d: "Circuitos C1 a C12, grado de electrificación y memoria de diseño.",
+                tono: "teal",
               },
               {
                 icon: Cable,
                 t: "Reforma",
                 d: "Estado actual, circuitos nuevos y comprobación de la instalación.",
+                tono: "copper",
               },
               {
                 icon: Gauge,
                 t: "Ampliación de potencia",
                 d: "Previsión de cargas, IGA y coordinación con la derivación.",
+                tono: "green",
               },
               {
                 icon: FileText,
                 t: "Documentación",
                 d: "Memoria A4 en PDF con tablas, fórmulas y conclusiones.",
+                tono: "blue",
               },
             ].map((c) => {
               const Icon = c.icon;
@@ -524,7 +543,11 @@ export default function Landing() {
                   key={c.t}
                   className="rounded-xl border border-border bg-background p-4"
                 >
-                  <Icon className="size-4 text-primary" />
+                  <span
+                    className={`flex size-8 items-center justify-center rounded-lg ${tonos[c.tono]}`}
+                  >
+                    <Icon className="size-4" />
+                  </span>
                   <p className="mt-3 text-[13px] font-semibold">{c.t}</p>
                   <p className="mt-1 text-[11.5px] leading-5 text-muted-foreground">
                     {c.d}
@@ -540,17 +563,18 @@ export default function Landing() {
       <section className="mx-auto w-full max-w-6xl px-5 py-16">
         <div className="relative overflow-hidden rounded-2xl bg-sidebar px-8 py-12 text-sidebar-foreground">
           <div className="absolute inset-0 blueprint-dark opacity-60" />
-          <div className="absolute -right-24 -top-24 size-72 rounded-full bg-accent/20 blur-3xl" />
+          <div className="absolute -right-24 -top-24 size-72 rounded-full bg-accent/25 blur-3xl" />
+          <div className="absolute -bottom-24 left-1/3 size-64 rounded-full bg-primary/30 blur-3xl" />
           <div className="relative max-w-2xl">
             <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-sidebar-primary">
               Empieza por una vivienda
             </p>
-            <h2 className="mt-3 text-3xl font-semibold tracking-tight sm:text-[2.15rem]">
-              Menos hojas de cálculo. Más instalaciones terminadas.
+            <h2 className="mt-3 text-3xl font-semibold tracking-tight sm:text-[2.25rem]">
+              Esta tarde puedes entregar la memoria.
             </h2>
             <p className="mt-3 text-[14px] leading-7 text-white/55">
-              Crea el proyecto, carga los circuitos de la ITC-BT-25 y descarga la
-              memoria técnica en PDF.
+              Crea la instalación, revisa los cálculos y descarga el PDF. El
+              resto es obra.
             </p>
             <div className="mt-7 flex flex-col gap-3 sm:flex-row">
               <Button
@@ -559,7 +583,7 @@ export default function Landing() {
                 className="gap-2 bg-accent text-accent-foreground hover:bg-accent/90"
               >
                 <Link to="/auth?returnTo=/projects">
-                  Entrar y crear el proyecto
+                  Crear mi memoria
                   <ArrowRight className="size-4" />
                 </Link>
               </Button>
@@ -578,7 +602,7 @@ export default function Landing() {
 
       <footer className="border-t border-border/60">
         <div className="mx-auto flex w-full max-w-6xl flex-col gap-6 px-5 py-8 sm:flex-row sm:items-center sm:justify-between">
-          <Brand tone="dark" subtitle="Cálculo y memoria REBT" />
+          <Brand tone="dark" subtitle="Documentación REBT" />
           <p className="max-w-xl text-[11px] leading-5 text-muted-foreground sm:text-right">
             REBT Pro · Herramienta de cálculo y documentación técnica. La
             normativa estatal se complementa con disposiciones autonómicas y
