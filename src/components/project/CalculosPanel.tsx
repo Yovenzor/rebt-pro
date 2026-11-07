@@ -300,7 +300,7 @@ export function CalculosPanel({
                 className={cn(
                   "mt-4 rounded-lg border px-3 py-2.5 text-[12px]",
                   (resultado.desequilibrioPct ?? 0) > 15
-                    ? "border-accent/40 bg-accent/10 text-accent-foreground"
+                    ? "border-accent/40 bg-accent/10 text-accent-foreground dark:text-accent"
                     : "border-primary/25 bg-primary/8 text-primary",
                 )}
               >

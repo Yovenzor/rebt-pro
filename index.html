@@ -17,6 +17,18 @@
     rel="stylesheet"
   />
   <title>REBT Pro · Documentación REBT para instalaciones eléctricas</title>
+  <script>
+    // Aplica el tema guardado antes de pintar para evitar el destello inicial.
+    (function () {
+      try {
+        var theme = localStorage.getItem("rebt-pro-theme");
+        if (theme === "dark") {
+          document.documentElement.classList.add("dark");
+          document.documentElement.style.colorScheme = "dark";
+        }
+      } catch (e) {}
+    })();
+  </script>
 </head>
 
 

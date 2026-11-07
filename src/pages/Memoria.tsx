@@ -37,7 +37,7 @@ export default function Memoria() {
 
   if (data === undefined) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[#eef1f3]">
+      <div className="flex min-h-screen items-center justify-center bg-background">
         <Loader2 className="size-5 animate-spin text-muted-foreground" />
       </div>
     );
@@ -45,7 +45,7 @@ export default function Memoria() {
 
   if (!proyecto || !resultado) {
     return (
-      <div className="flex min-h-screen flex-col items-center justify-center gap-4 bg-[#eef1f3] px-6 text-center">
+      <div className="flex min-h-screen flex-col items-center justify-center gap-4 bg-background px-6 text-center">
         <p className="text-[16px] font-semibold">Memoria no disponible</p>
         <p className="max-w-sm text-[12.5px] text-muted-foreground">
           La instalación no existe o no tienes acceso a ella.
@@ -58,8 +58,8 @@ export default function Memoria() {
   }
 
   return (
-    <div className="min-h-screen bg-[#e9edf0] print:bg-white">
-      <header className="no-print sticky top-0 z-30 border-b border-[#d5dce1] bg-white/90 backdrop-blur-md">
+    <div className="min-h-screen bg-muted/60 print:bg-white">
+      <header className="no-print sticky top-0 z-30 border-b border-border bg-background/90 backdrop-blur-md">
         <div className="mx-auto flex w-full max-w-5xl items-center gap-3 px-4 py-3">
           <Button asChild variant="ghost" size="sm" className="gap-1.5">
             <Link to={`/projects/${projectId}`}>

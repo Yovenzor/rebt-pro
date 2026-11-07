@@ -314,7 +314,7 @@ function CircuitoDialog({
                   err
                     ? "border-destructive/30 bg-destructive/8 text-destructive"
                     : r.estado === "aviso"
-                      ? "border-accent/40 bg-accent/10 text-accent-foreground"
+                      ? "border-accent/40 bg-accent/10 text-accent-foreground dark:text-accent"
                       : "border-primary/25 bg-primary/8 text-primary",
                 )}
               >
@@ -567,7 +567,7 @@ export function CircuitosPanel({
                     "inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-[10.5px] font-medium",
                     r.estado === "error" && "bg-destructive/10 text-destructive",
                     r.estado === "aviso" &&
-                      "bg-accent/15 text-accent-foreground",
+                      "bg-accent/15 text-accent-foreground dark:text-accent",
                     r.estado === "ok" && "bg-primary/8 text-primary",
                   )}
                   title={

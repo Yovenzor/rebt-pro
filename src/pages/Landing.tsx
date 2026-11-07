@@ -177,7 +177,7 @@ export default function Landing() {
               La documentación de la instalación, calculada y{" "}
               <span className="relative inline-block whitespace-nowrap px-1">
                 <span className="absolute inset-x-0 bottom-[0.14em] h-[0.28em] -rotate-1 rounded-sm bg-accent/60" />
-                <span className="relative">en PDF</span>
+                <span className="relative dark:text-accent-foreground">en PDF</span>
               </span>
               .
             </h1>
@@ -494,7 +494,7 @@ export default function Landing() {
             </p>
             <div className="mt-6 rounded-xl border border-accent/40 bg-accent/[0.08] p-4">
               <div className="flex items-start gap-2.5">
-                <AlertTriangle className="mt-0.5 size-4 shrink-0 text-accent-foreground/80" />
+                <AlertTriangle className="mt-0.5 size-4 shrink-0 text-accent-foreground/80 dark:text-accent/80" />
                 <div>
                   <p className="text-[12.5px] font-semibold">
                     Ingeniería, no magia

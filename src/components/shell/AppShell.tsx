@@ -1,4 +1,5 @@
 import { Brand, BrandMark } from "@/components/Brand";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -110,7 +111,7 @@ export function AppShell({
 
   const sidebarBody = (
     <>
-      <div className="h-[2px] shrink-0 bg-gradient-to-r from-[#3f8f8a] via-accent to-[#7fae8e]" />
+      <div className="h-[2px] shrink-0 bg-gradient-to-r from-mint via-accent to-[#7fae8e]" />
       <div className="px-5 pb-5 pt-6">
         <Brand href="/projects" />
       </div>
@@ -144,15 +145,18 @@ export function AppShell({
               {user?.email ?? "Sesión de invitado"}
             </p>
           </div>
-          <button
-            type="button"
-            onClick={handleSignOut}
-            className="rounded-md p-1.5 text-white/40 transition-colors hover:bg-white/10 hover:text-white"
-            aria-label="Cerrar sesión"
-            title="Cerrar sesión"
-          >
-            <LogOut className="size-4" />
-          </button>
+          <div className="flex shrink-0 items-center gap-1">
+            <ThemeToggle />
+            <button
+              type="button"
+              onClick={handleSignOut}
+              className="rounded-md p-1.5 text-white/40 transition-colors hover:bg-white/10 hover:text-white"
+              aria-label="Cerrar sesión"
+              title="Cerrar sesión"
+            >
+              <LogOut className="size-4" />
+            </button>
+          </div>
         </div>
         <p className="px-2 pt-1 text-[10px] leading-relaxed text-white/25">
           Documentación REBT · RD 842/2002

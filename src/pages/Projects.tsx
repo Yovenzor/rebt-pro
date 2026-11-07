@@ -164,7 +164,7 @@ export default function Projects() {
                 Memoria y cálculos en PDF
               </p>
             </div>
-            <span className="flex size-9 items-center justify-center rounded-lg bg-accent/15 text-accent-foreground">
+            <span className="flex size-9 items-center justify-center rounded-lg bg-accent/15 text-accent-foreground dark:text-accent">
               <Zap className="size-4" />
             </span>
           </div>
@@ -215,7 +215,7 @@ export default function Projects() {
                       </p>
                     </div>
                   </div>
-                  <span className="shrink-0 rounded-md bg-accent/15 px-2 py-1 text-[10px] font-medium uppercase tracking-wider text-accent-foreground">
+                  <span className="shrink-0 rounded-md bg-accent/15 px-2 py-1 text-[10px] font-medium uppercase tracking-wider text-accent-foreground dark:text-accent">
                     {p.tipoVivienda || "Vivienda"}
                   </span>
                 </div>

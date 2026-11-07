@@ -61,13 +61,13 @@ const ESTILO: Record<
   },
   incumplimiento: {
     borde: "border-l-accent",
-    icono: "bg-accent/15 text-accent-foreground",
+    icono: "bg-accent/15 text-accent-foreground dark:text-accent",
     punto: "bg-accent",
     Icon: ShieldAlert,
   },
   advertencia: {
     borde: "border-l-accent/60",
-    icono: "bg-accent/10 text-accent-foreground",
+    icono: "bg-accent/10 text-accent-foreground dark:text-accent",
     punto: "bg-accent/70",
     Icon: AlertTriangle,
   },
@@ -158,7 +158,7 @@ export function ValidacionPanel({
                 {
                   label: "Incumplim.",
                   value: resumen.incumplimientos,
-                  tone: "text-accent-foreground",
+                  tone: "text-accent-foreground dark:text-accent",
                 },
                 {
                   label: "Pendientes",

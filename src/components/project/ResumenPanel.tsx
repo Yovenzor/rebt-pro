@@ -46,10 +46,10 @@ export function ResumenPanel({
 
   const colorBarra = (estado: string) =>
     estado === "error"
-      ? "oklch(0.56 0.19 27)"
+      ? "var(--destructive)"
       : estado === "aviso"
-        ? "oklch(0.75 0.13 80)"
-        : "oklch(0.52 0.09 202)";
+        ? "var(--accent)"
+        : "var(--chart-1)";
 
   const punto: Record<Severidad, string> = {
     critico: "bg-destructive",
@@ -133,22 +133,26 @@ export function ResumenPanel({
                   dataKey="nombre"
                   tickLine={false}
                   axisLine={false}
-                  tick={{ fontSize: 10, fill: "oklch(0.52 0.014 250)" }}
+                  tick={{ fontSize: 10, fill: "var(--muted-foreground)" }}
                 />
                 <YAxis
                   tickLine={false}
                   axisLine={false}
-                  tick={{ fontSize: 10, fill: "oklch(0.52 0.014 250)" }}
+                  tick={{ fontSize: 10, fill: "var(--muted-foreground)" }}
                   tickFormatter={(v: number) => `${v / 1000}k`}
                 />
                 <Tooltip
-                  cursor={{ fill: "oklch(0.962 0.005 240)" }}
+                  cursor={{ fill: "var(--muted)", fillOpacity: 0.55 }}
                   contentStyle={{
+                    background: "var(--card)",
+                    color: "var(--card-foreground)",
                     borderRadius: 10,
-                    border: "1px solid oklch(0.905 0.008 250)",
+                    border: "1px solid var(--border)",
                     fontSize: 11,
-                    boxShadow: "0 12px 30px -18px rgba(20,35,50,0.4)",
+                    boxShadow: "0 12px 30px -18px rgba(0,0,0,0.45)",
                   }}
+                  labelStyle={{ color: "var(--muted-foreground)" }}
+                  itemStyle={{ color: "var(--card-foreground)" }}
                   formatter={(v: number) => [`${num(v)} W`, "Potencia"]}
                 />
                 <Bar dataKey="potencia" radius={[4, 4, 0, 0]} maxBarSize={38}>
@@ -183,7 +187,7 @@ export function ResumenPanel({
               {
                 k: "Incumplimientos",
                 v: resumen.incumplimientos,
-                tone: "text-accent-foreground",
+                tone: "text-accent-foreground dark:text-accent",
                 box: "border-accent/40 bg-accent/[0.09]",
                 ir: "validacion" as SeccionId,
               },

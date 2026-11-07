@@ -4,6 +4,7 @@ import { RequireAuth } from "@/components/RequireAuth";
 import { VlyToolbar } from "../vly-toolbar-readonly.tsx";
 import { ConvexAuthProvider } from "@convex-dev/auth/react";
 import { ConvexReactClient } from "convex/react";
+import { ThemeProvider } from "next-themes";
 import React, { StrictMode, useEffect, lazy, Suspense } from "react";
 import { createRoot } from "react-dom/client";
 import {
@@ -119,6 +120,12 @@ function RouteSyncer() {
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <RootErrorBoundary>
+      <ThemeProvider
+        attribute="class"
+        defaultTheme="light"
+        enableSystem={false}
+        storageKey="rebt-pro-theme"
+      >
       <ToolbarErrorBoundary>
         <VlyToolbar />
       </ToolbarErrorBoundary>
@@ -163,6 +170,7 @@ createRoot(document.getElementById("root")!).render(
         </BrowserRouter>
         <Toaster />
       </ConvexAuthProvider>
+      </ThemeProvider>
     </RootErrorBoundary>
   </StrictMode>,
 );

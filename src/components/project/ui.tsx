@@ -272,8 +272,10 @@ export function CheckRow({
 
 const severidadEstilo: Record<Severidad, string> = {
   critico: "border-destructive/25 bg-destructive/10 text-destructive",
-  incumplimiento: "border-accent/40 bg-accent/15 text-accent-foreground",
-  advertencia: "border-[oklch(0.72_0.13_85)]/35 bg-[oklch(0.9_0.09_90)]/45 text-[oklch(0.42_0.09_75)]",
+  incumplimiento:
+    "border-accent/40 bg-accent/15 text-accent-foreground dark:text-accent",
+  advertencia:
+    "border-[oklch(0.72_0.13_85)]/35 bg-[oklch(0.9_0.09_90)]/45 text-[oklch(0.42_0.09_75)] dark:border-amber-300/30 dark:bg-amber-300/15 dark:text-amber-100",
   recomendacion: "border-primary/25 bg-primary/8 text-primary",
   pendiente: "border-border bg-muted text-muted-foreground",
 };
@@ -342,7 +344,7 @@ export function Stat({
         className={cn(
           "mt-1.5 text-[26px] font-semibold leading-none tracking-tight tabular-nums",
           tone === "primary" && "text-primary",
-          tone === "warning" && "text-accent-foreground",
+          tone === "warning" && "text-accent-foreground dark:text-accent",
           tone === "danger" && "text-destructive",
         )}
       >

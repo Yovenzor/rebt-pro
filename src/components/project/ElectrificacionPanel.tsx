@@ -147,14 +147,14 @@ export function ElectrificacionPanel({
           <section className="surface-card overflow-hidden">
             <div className="flex items-center justify-between gap-3 border-b border-border/70 bg-muted/30 px-5 py-3.5">
               <span className="flex items-center gap-2 text-[13px] font-medium">
-                <Sparkles className="size-4 text-accent-foreground/70" />
+                <Sparkles className="size-4 text-accent-foreground/70 dark:text-accent/70" />
                 Grado calculado
               </span>
               <span
                 className={cn(
                   "rounded-full px-2.5 py-1 text-[11.5px] font-semibold uppercase tracking-wider",
                   calculado === "elevada"
-                    ? "bg-accent/20 text-accent-foreground"
+                    ? "bg-accent/20 text-accent-foreground dark:text-accent"
                     : "bg-primary/10 text-primary",
                 )}
               >
@@ -186,7 +186,7 @@ export function ElectrificacionPanel({
                 <ul className="mt-4 space-y-1.5">
                   {resultado.motivosGrado.map((m) => (
                     <li key={m} className="flex gap-2 text-[12.5px] leading-5 text-muted-foreground">
-                      <span className="mt-1.5 size-1 shrink-0 rounded-full bg-accent-foreground/60" />
+                      <span className="mt-1.5 size-1 shrink-0 rounded-full bg-accent-foreground/60 dark:bg-accent/60" />
                       {m}
                     </li>
                   ))}
@@ -200,7 +200,7 @@ export function ElectrificacionPanel({
 
               {discrepancia && (
                 <div className="mt-4 rounded-lg border border-accent/40 bg-accent/[0.08] p-3">
-                  <p className="flex items-start gap-2 text-[12px] leading-5 text-accent-foreground">
+                  <p className="flex items-start gap-2 text-[12px] leading-5 text-accent-foreground dark:text-accent">
                     <AlertTriangle className="mt-0.5 size-3.5 shrink-0" />
                     El proyecto declara electrificación {declarado}, pero los
                     criterios calculados exigen {calculado}.
