@@ -112,8 +112,97 @@ export function MemoriaDoc({
 
   return (
     <article className="doc-page">
-      {/* Portada */}
-      <header className="flex min-h-[880px] flex-col">
+      {/* Aviso previo: ocupa la primera hoja del PDF */}
+      <section className="flex min-h-[880px] flex-col">
+        <div className="flex items-start justify-between border-b-2 border-[#a5322a] pb-4">
+          <div className="flex items-center gap-3">
+            <BrandMark tone="ink" className="size-11" />
+            <div>
+              <p className="text-[15px] font-semibold leading-none text-[#16222c]">
+                REBT <span className="font-normal text-[#5c6873]">Pro</span>
+              </p>
+              <p className="mt-1 text-[8.5px] font-medium uppercase tracking-[0.16em] text-[#7e8b96]">
+                Aviso previo al documento
+              </p>
+            </div>
+          </div>
+          <div className="text-right text-[8.5px] leading-4 text-[#7e8b96]">
+            <p>Expediente</p>
+            <p className="font-semibold text-[#1d2830]">
+              {proyecto.expediente || "Sin consignar"}
+            </p>
+          </div>
+        </div>
+
+        <div className="my-auto py-10">
+          <div className="flex items-center gap-4">
+            <span className="flex size-14 shrink-0 items-center justify-center rounded-full border-2 border-[#a5322a] text-[28px] font-semibold leading-none text-[#a5322a]">
+              !
+            </span>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#a5322a]">
+              Advertencia importante
+            </p>
+          </div>
+
+          <h1 className="mt-5 max-w-[580px] text-[32px] font-semibold leading-[1.15] tracking-tight text-[#16222c]">
+            Documento generado por inteligencia artificial
+          </h1>
+
+          <p className="mt-5 max-w-[610px] text-[13px] leading-6 text-[#3c4852]">
+            Esta memoria se ha generado de forma automática con inteligencia
+            artificial a partir de los datos introducidos en el proyecto. No ha
+            sido revisada ni validada por una persona antes de su emisión.
+          </p>
+
+          <div className="mt-7 rounded-lg border-2 border-[#a5322a] bg-[#fdf6f4] p-5">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8f2f27]">
+              No confíe en el contenido sin verificarlo
+            </p>
+            <ul className="mt-3 space-y-2 text-[11.5px] leading-5 text-[#4a3a37]">
+              <li>
+                Puede contener errores de cálculo, datos incompletos, omisiones
+                o interpretaciones normativas incorrectas.
+              </li>
+              <li>
+                No sustituye la revisión, las mediciones, los ensayos ni la firma
+                de un técnico competente.
+              </li>
+              <li>
+                No es un certificado oficial ni garantiza el cumplimiento del
+                REBT ni de la normativa autonómica aplicable.
+              </li>
+              <li>
+                Antes de utilizarlo, compruebe los datos de partida, potencias,
+                secciones, caídas de tensión, protecciones, puesta a tierra y
+                requisitos de la distribuidora.
+              </li>
+            </ul>
+          </div>
+
+          <p className="mt-5 max-w-[610px] text-[11px] font-medium leading-5 text-[#6b2d27]">
+            Si detecta cualquier discrepancia o no puede verificar un dato, no
+            utilice este documento para ejecutar la instalación ni para tomar
+            decisiones de seguridad.
+          </p>
+        </div>
+
+        <div className="border-t border-[#dfe4e8] pt-4 text-[9px] leading-4 text-[#7e8b96]">
+          <p className="font-semibold uppercase tracking-[0.14em] text-[#5c6873]">
+            Este aviso afecta a todas las páginas del documento
+          </p>
+          <p className="mt-1">
+            Instalación: {proyecto.nombre || "Sin nombre"} · Fecha de generación:{" "}
+            {generado}
+          </p>
+          <p className="mt-1">
+            Las páginas siguientes contienen la memoria técnica y deben leerse
+            junto con esta advertencia.
+          </p>
+        </div>
+      </section>
+
+      {/* Portada: comienza en la segunda hoja */}
+      <header className="doc-page-break flex min-h-[880px] flex-col">
         <div className="flex items-start justify-between border-b-2 border-[#16222c] pb-4">
           <div className="flex items-center gap-3">
             <BrandMark tone="ink" className="size-11" />
