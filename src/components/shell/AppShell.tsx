@@ -10,7 +10,7 @@ import {
 import { useAuth } from "@/hooks/use-auth";
 import { cn } from "@/lib/utils";
 import type { LucideIcon } from "lucide-react";
-import { LogOut, Menu } from "lucide-react";
+import { ArrowLeft, LogOut, Menu } from "lucide-react";
 import { useState, type ReactNode } from "react";
 import { useNavigate } from "react-router";
 
@@ -89,6 +89,7 @@ export function AppShell({
   eyebrow,
   actions,
   navLabel = "Instalación",
+  back,
 }: {
   children: ReactNode;
   navItems: NavItem[];
@@ -99,6 +100,8 @@ export function AppShell({
   eyebrow?: string;
   actions?: ReactNode;
   navLabel?: string;
+  /** Acceso directo a la pantalla anterior, normalmente el listado. */
+  back?: { label: string; onClick: () => void };
 }) {
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
@@ -196,6 +199,21 @@ export function AppShell({
             >
               <Menu className="size-4" />
             </Button>
+
+            {back && (
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                className="-ml-1 shrink-0 gap-1.5 px-2 text-muted-foreground hover:text-foreground sm:px-3"
+                onClick={back.onClick}
+                aria-label={back.label}
+                title={back.label}
+              >
+                <ArrowLeft className="size-4" />
+                <span className="hidden sm:inline">{back.label}</span>
+              </Button>
+            )}
 
             <div className="min-w-0 flex-1">
               {eyebrow && <p className="eyebrow mb-0.5">{eyebrow}</p>}

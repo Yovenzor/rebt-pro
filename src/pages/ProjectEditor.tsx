@@ -111,6 +111,25 @@ export default function ProjectEditor() {
     setDraft((prev) => (prev ? { ...prev, ...patch } : prev));
   };
 
+  /** Guarda lo pendiente antes de salir de la instalación. */
+  const volverAInstalaciones = async () => {
+    if (!draft) {
+      navigate("/projects");
+      return;
+    }
+    if (dirty.current) {
+      try {
+        await updateMutation({ id: projectId, data: draft });
+        dirty.current = false;
+        setGuardado("guardado");
+      } catch {
+        toast.error("No se pudo guardar antes de volver a instalaciones.");
+        return;
+      }
+    }
+    navigate("/projects");
+  };
+
   /** Guarda lo pendiente antes de abrir el documento para no emitir datos antiguos. */
   const irAMemoria = async () => {
     if (!draft) return;
@@ -207,6 +226,7 @@ export default function ProjectEditor() {
       eyebrow={meta.eyebrow}
       title={meta.titulo}
       subtitle={draft.nombre}
+      back={{ label: "Instalaciones", onClick: volverAInstalaciones }}
       actions={
         <>
           <span className="hidden items-center gap-1.5 text-[11.5px] text-muted-foreground sm:inline-flex">
