@@ -24,6 +24,7 @@ export type SeccionId =
   | "calculos"
   | "cuadro"
   | "tierra"
+  | "presupuesto"
   | "validacion"
   | "memoria";
 

@@ -2,6 +2,7 @@ import { MemoriaDoc } from "@/components/project/MemoriaDoc";
 import { Button } from "@/components/ui/button";
 import { api } from "@/convex/_generated/api";
 import type { Id } from "@/convex/_generated/dataModel";
+import { normalizarProyecto } from "@/lib/rebt/data";
 import { calcularProyecto } from "@/lib/rebt/engine";
 import { analizarProyecto } from "@/lib/rebt/findings";
 import type { Proyecto } from "@/lib/rebt/types";
@@ -16,7 +17,10 @@ export default function Memoria() {
   const navigate = useNavigate();
   const data = useQuery(api.projects.get, { id: projectId });
 
-  const proyecto = data?.data as Proyecto | undefined;
+  const proyecto = useMemo<Proyecto | undefined>(
+    () => (data?.data ? normalizarProyecto(data.data as Proyecto) : undefined),
+    [data],
+  );
   const resultado = useMemo(
     () => (proyecto ? calcularProyecto(proyecto) : null),
     [proyecto],

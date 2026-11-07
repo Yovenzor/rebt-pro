@@ -4,12 +4,14 @@ import { CircuitosPanel } from "@/components/project/CircuitosPanel";
 import { CuadroPanel } from "@/components/project/CuadroPanel";
 import { DatosPanel } from "@/components/project/DatosPanel";
 import { ElectrificacionPanel } from "@/components/project/ElectrificacionPanel";
+import { PresupuestoPanel } from "@/components/project/PresupuestoPanel";
 import { ResumenPanel } from "@/components/project/ResumenPanel";
 import { TierraPanel } from "@/components/project/TierraPanel";
 import { ValidacionPanel } from "@/components/project/ValidacionPanel";
 import { Button } from "@/components/ui/button";
 import { api } from "@/convex/_generated/api";
 import type { Id } from "@/convex/_generated/dataModel";
+import { normalizarProyecto } from "@/lib/rebt/data";
 import { calcularProyecto } from "@/lib/rebt/engine";
 import { analizarProyecto, resumenHallazgos } from "@/lib/rebt/findings";
 import type { SeccionId } from "@/lib/rebt/findings";
@@ -25,6 +27,7 @@ import {
   Landmark,
   LayoutDashboard,
   Loader2,
+  Receipt,
   ShieldAlert,
   ShieldCheck,
   Upload,
@@ -41,6 +44,7 @@ const SECCIONES: { id: SeccionId; label: string; icon: NavItem["icon"] }[] = [
   { id: "calculos", label: "Cálculos eléctricos", icon: Calculator },
   { id: "cuadro", label: "Cuadro y protecciones", icon: ShieldCheck },
   { id: "tierra", label: "Puesta a tierra", icon: Landmark },
+  { id: "presupuesto", label: "Presupuesto", icon: Receipt },
   { id: "validacion", label: "Detector de errores", icon: ShieldAlert },
   { id: "memoria", label: "Memoria técnica", icon: FileText },
 ];
@@ -53,6 +57,7 @@ const TITULOS: Record<SeccionId, { titulo: string; eyebrow: string }> = {
   calculos: { titulo: "Cálculos eléctricos", eyebrow: "Motor de cálculo" },
   cuadro: { titulo: "Cuadro y protecciones", eyebrow: "Cuadro eléctrico" },
   tierra: { titulo: "Puesta a tierra", eyebrow: "ITC-BT-18" },
+  presupuesto: { titulo: "Presupuesto", eyebrow: "Estimación económica" },
   validacion: { titulo: "Detector de errores", eyebrow: "Cumplimiento REBT" },
   memoria: { titulo: "Memoria técnica", eyebrow: "El documento" },
 };
@@ -81,7 +86,7 @@ export default function ProjectEditor() {
 
   useEffect(() => {
     if (data && data._id === projectId && loaded.current !== projectId) {
-      setDraft(data.data as Proyecto);
+      setDraft(normalizarProyecto(data.data as Proyecto));
       loaded.current = projectId;
     }
   }, [data, projectId]);
@@ -293,6 +298,15 @@ export default function ProjectEditor() {
             update={update}
             resultado={resultado}
             highlightCampo={highlightCampo}
+          />
+        )}
+
+        {seccion === "presupuesto" && (
+          <PresupuestoPanel
+            proyecto={draft}
+            update={update}
+            resultado={resultado}
+            onIrAProtecciones={() => irA("cuadro", { campo: "sobretensiones" })}
           />
         )}
 

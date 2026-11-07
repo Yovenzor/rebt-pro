@@ -70,6 +70,8 @@ export function MemoriaDoc({
   const e = proyecto.electrificacion;
   const s = proyecto.suministro;
   const t = proyecto.tierra;
+  const conSobretensiones = proyecto.protecciones?.sobretensiones ?? true;
+  const polosDps = s.fases === 3 ? 4 : 2;
   const tension = s.fases === 3 ? 400 : 230;
 
   const porSeccion = new Map<number, { circuitos: number; longitud: number }>();
@@ -567,14 +569,18 @@ export function MemoriaDoc({
               <td>{s.fases === 3 ? "4" : "2"}</td>
               <td>Todos</td>
             </tr>
-            <tr>
-              <td className="font-medium">Protector de sobretensiones (previsto)</td>
-              <td>—</td>
-              <td>—</td>
-              <td>Tipo 2</td>
-              <td>4</td>
-              <td>General</td>
-            </tr>
+            {conSobretensiones && (
+              <tr>
+                <td className="font-medium">
+                  Protector de sobretensiones (previsto)
+                </td>
+                <td>—</td>
+                <td>—</td>
+                <td>Tipo 2</td>
+                <td>{polosDps}</td>
+                <td>General</td>
+              </tr>
+            )}
             {resultado.diferenciales.map((d) => (
               <tr key={d.diferencial.id}>
                 <td className="font-medium">{d.diferencial.nombre}</td>
@@ -819,6 +825,14 @@ export function MemoriaDoc({
               v={Math.max(0, ...resultado.diferenciales.map((d) => d.circuitos.length))}
             />
             <Dato k="Poder de corte declarado" v={`${s.poderCorte} kA`} />
+            <Dato
+              k="Protector de sobretensiones"
+              v={
+                conSobretensiones
+                  ? `Tipo 2 · ${polosDps}P`
+                  : "No previsto"
+              }
+            />
           </dl>
         </div>
         <p className="mt-2 text-[10.5px] leading-5 text-[#3c4852]">
@@ -942,14 +956,27 @@ export function MemoriaDoc({
       </Bloque>
 
       <Bloque n="19" titulo="Protección contra sobretensiones">
-        <p className="text-[10.5px] leading-5 text-[#3c4852]">
-          Se prevé la instalación de un protector contra sobretensiones
-          transitorias tipo 2 en el cuadro general, coordinado con la protección
-          general. Su necesidad y características definitivas se ajustarán a la
-          ITC-BT-23 y a la ubicación de la vivienda (nivel de exposición y
-          existencia de pararrayos en el edificio), datos que deben confirmarse en
-          el expediente.
-        </p>
+        {conSobretensiones ? (
+          <p className="text-[10.5px] leading-5 text-[#3c4852]">
+            Se prevé la instalación de un protector contra sobretensiones
+            transitorias tipo 2 de {polosDps} polos en el cuadro general,
+            coordinado con la protección general. Su necesidad y características
+            definitivas se ajustan a la ITC-BT-23 y a la ubicación de la vivienda
+            (nivel de exposición y existencia de pararrayos en el edificio),
+            datos que deben confirmarse en el expediente.
+          </p>
+        ) : (
+          <div className="rounded border border-[#f0d9b8] bg-[#fdf8f0] px-3 py-2.5 text-[10px] leading-5 text-[#6b5327]">
+            <p>
+              <strong>No se prevé protector contra sobretensiones.</strong> El
+              cuadro se documenta sin DPS por decisión del proyecto. La
+              procedencia de incorporarlo debe justificarse conforme a la
+              ITC-BT-23, el nivel de exposición de la vivienda y la posible
+              existencia de pararrayos en el edificio; si el análisis lo exige,
+              active la protección en el apartado de cuadro y protecciones.
+            </p>
+          </div>
+        )}
       </Bloque>
 
       <Bloque n="20" titulo="Esquema unifilar del cuadro" salto>
@@ -963,15 +990,23 @@ export function MemoriaDoc({
           <div className="flex items-center justify-center gap-2 border-b border-[#dfe4e8] pb-3">
             <div className="rounded border border-[#8a6a37] bg-[#f4efe5] px-3 py-1.5 text-center">
               <p className="text-[8px] uppercase tracking-wider text-[#7a5f34]">IGA</p>
-              <p className="text-[10px] font-semibold">{resultado.igaRecomendado} A · 2P</p>
-            </div>
-            <span className="text-[9px] text-[#7e8b96]">→</span>
-            <div className="rounded border border-[#b4453a] bg-[#f9eeec] px-3 py-1.5 text-center">
-              <p className="text-[8px] uppercase tracking-wider text-[#8f3a31]">DPS</p>
               <p className="text-[10px] font-semibold">
-                Previsto · tipo 2 · {s.poderCorte} kA
+                {resultado.igaRecomendado} A · {s.fases === 3 ? "4P" : "2P"}
               </p>
             </div>
+            {conSobretensiones && (
+              <>
+                <span className="text-[9px] text-[#7e8b96]">→</span>
+                <div className="rounded border border-[#b4453a] bg-[#f9eeec] px-3 py-1.5 text-center">
+                  <p className="text-[8px] uppercase tracking-wider text-[#8f3a31]">
+                    DPS
+                  </p>
+                  <p className="text-[10px] font-semibold">
+                    {polosDps}P · tipo 2
+                  </p>
+                </div>
+              </>
+            )}
             <span className="text-[9px] text-[#7e8b96]">→</span>
             <div className="rounded border border-[#3d6f73] bg-[#eef4f4] px-3 py-1.5 text-center">
               <p className="text-[8px] uppercase tracking-wider text-[#2f585b]">

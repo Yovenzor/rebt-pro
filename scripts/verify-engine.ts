@@ -26,6 +26,7 @@ import {
   PRESETS_ESPECIALES,
 } from "../src/lib/rebt/data";
 import { analizarProyecto } from "../src/lib/rebt/findings";
+import { calcularPresupuesto } from "../src/lib/rebt/presupuesto";
 import type { Circuito } from "../src/lib/rebt/types";
 
 let pasadas = 0;
@@ -218,6 +219,40 @@ test("Caída de tensión acumulada del proyecto = máximo de los circuitos", () 
   const r = calcularProyecto(p);
   const max = Math.max(...r.circuitos.map((c) => c.caidaPct));
   assert.equal(r.caidaMaximaPct, max);
+});
+
+test("Presupuesto: DPS, partidas manuales y precios editables", () => {
+  const p = proyectoEjemplo();
+  const r = calcularProyecto(p);
+  const base = calcularPresupuesto(p, r);
+
+  assert.ok(base.materiales > 0);
+  assert.ok(base.manoObra > 0);
+  assert.ok(base.lineas.some((l) => l.id === "dps"));
+  assert.ok(
+    Math.abs(base.total - (base.subtotal + base.iva)) < 0.011,
+    "el total debe ser el subtotal más el IVA",
+  );
+
+  p.protecciones.sobretensiones = false;
+  const sinDps = calcularPresupuesto(p, r);
+  assert.ok(!sinDps.lineas.some((l) => l.id === "dps"));
+  assert.ok(sinDps.total < base.total);
+
+  p.presupuesto.lineasManuales.push({
+    id: "manual-test",
+    descripcion: "Trabajo adicional",
+    unidad: "ud",
+    cantidad: 2,
+    precioUnitario: 30,
+  });
+  const conManual = calcularPresupuesto(p, r);
+  assert.equal(conManual.manuales, 60);
+  assert.ok(conManual.total > sinDps.total);
+
+  p.presupuesto.precios.iga = 100;
+  const conPrecioEditado = calcularPresupuesto(p, r);
+  assert.ok(conPrecioEditado.total > conManual.total);
 });
 
 console.log(`\n${pasadas} comprobaciones superadas.`);

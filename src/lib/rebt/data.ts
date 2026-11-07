@@ -687,5 +687,66 @@ export function proyectoEjemplo(nombre = "Vivienda unifamiliar"): Proyecto {
       horasEquivalenteDia: 5,
       precioKwh: 0.15,
     },
+    protecciones: {
+      sobretensiones: true,
+    },
+    presupuesto: {
+      ivaPct: 21,
+      precios: {},
+      lineasManuales: [],
+    },
+  };
+}
+
+/**
+ * Completa proyectos guardados con versiones anteriores de la aplicación.
+ * Los campos nuevos son opcionales en los documentos ya persistidos, así que
+ * se rellenan con los valores que reproducen el comportamiento anterior.
+ */
+export function normalizarProyecto(proyecto: Proyecto): Proyecto {
+  const protecciones = proyecto.protecciones as
+    | Proyecto["protecciones"]
+    | undefined;
+  const presupuesto = proyecto.presupuesto as
+    | Proyecto["presupuesto"]
+    | undefined;
+
+  const lineasManuales = Array.isArray(presupuesto?.lineasManuales)
+    ? presupuesto.lineasManuales.map((linea, i) => ({
+        id: typeof linea.id === "string" ? linea.id : `manual-${i}`,
+        descripcion:
+          typeof linea.descripcion === "string" ? linea.descripcion : "",
+        unidad: typeof linea.unidad === "string" ? linea.unidad : "ud",
+        cantidad:
+          typeof linea.cantidad === "number" && Number.isFinite(linea.cantidad)
+            ? linea.cantidad
+            : 1,
+        precioUnitario:
+          typeof linea.precioUnitario === "number" &&
+          Number.isFinite(linea.precioUnitario)
+            ? linea.precioUnitario
+            : 0,
+      }))
+    : [];
+
+  const precios =
+    presupuesto?.precios && typeof presupuesto.precios === "object"
+      ? presupuesto.precios
+      : {};
+
+  return {
+    ...proyecto,
+    protecciones: {
+      sobretensiones: protecciones?.sobretensiones ?? true,
+    },
+    presupuesto: {
+      ivaPct:
+        typeof presupuesto?.ivaPct === "number" &&
+        Number.isFinite(presupuesto.ivaPct)
+          ? presupuesto.ivaPct
+          : 21,
+      precios,
+      lineasManuales,
+    },
   };
 }

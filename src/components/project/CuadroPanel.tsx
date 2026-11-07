@@ -1,5 +1,6 @@
 import { DataTable, SectionHeader, SelectField } from "./ui";
 import { Button } from "@/components/ui/button";
+import { Switch } from "@/components/ui/switch";
 import { IGA_MINIMO_GRADO, TIPOS_DIFERENCIAL } from "@/lib/rebt/data";
 import { potenciaAdmisible } from "@/lib/rebt/engine";
 import { num, potencia } from "@/lib/format";
@@ -40,6 +41,8 @@ export function CuadroPanel({
   highlightCampo?: string;
 }) {
   const iga = resultado.igaRecomendado;
+  const conSobretensiones = proyecto.protecciones.sobretensiones;
+  const polosDps = proyecto.suministro.fases === 3 ? 4 : 2;
   const admisible = potenciaAdmisible(
     iga,
     proyecto.suministro.fases,
@@ -96,16 +99,19 @@ export function CuadroPanel({
       tipo: "iga",
       ancho: proyecto.suministro.fases === 3 ? 4 : 2,
     },
-    {
+  ];
+
+  if (conSobretensiones) {
+    modulos.push({
       id: "dps",
       codigo: "DPS",
       nombre: "Protección contra sobretensiones",
       rating: "Tipo 2",
-      detalle: "Previsto",
+      detalle: `${polosDps}P · Previsto`,
       tipo: "dps",
-      ancho: 4,
-    },
-  ];
+      ancho: polosDps,
+    });
+  }
 
   const codigoDif = new Map(
     resultado.diferenciales.map((d, i) => [d.diferencial.id, `D${i + 1}`]),
@@ -163,16 +169,28 @@ export function CuadroPanel({
     pia: { barra: "bg-[#7a8794]", palanca: "bg-[#3a4249]" },
   };
 
-  const leyenda = [
+  const leyenda: {
+    tipo: ModuloCuadro["tipo"];
+    titulo: string;
+    texto: string;
+  }[] = [
     { tipo: "iga", titulo: "IGA", texto: "Corta toda la instalación" },
-    { tipo: "dps", titulo: "DPS", texto: "Protege de sobretensiones" },
+    ...(conSobretensiones
+      ? [
+          {
+            tipo: "dps" as const,
+            titulo: "DPS",
+            texto: "Protege de sobretensiones",
+          },
+        ]
+      : []),
     {
       tipo: "dif",
       titulo: "Diferencial",
       texto: "30 mA contra contactos indirectos",
     },
     { tipo: "pia", titulo: "PIA", texto: "Un magnetotérmico por circuito" },
-  ] as const;
+  ];
 
   return (
     <div>
@@ -378,6 +396,71 @@ export function CuadroPanel({
           </div>
         </section>
       </div>
+
+      <section
+        className={cn(
+          "mt-4 surface-card p-5",
+          highlightCampo === "sobretensiones" && "field-highlight",
+        )}
+        data-campo="sobretensiones"
+      >
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-start gap-3">
+            <span
+              className={cn(
+                "flex size-9 shrink-0 items-center justify-center rounded-lg",
+                conSobretensiones
+                  ? "bg-destructive/10 text-destructive"
+                  : "bg-muted text-muted-foreground",
+              )}
+            >
+              <Shield className="size-4" />
+            </span>
+            <div>
+              <h3 className="text-[14.5px] font-semibold">
+                Protección contra sobretensiones
+              </h3>
+              <p className="mt-1 max-w-2xl text-[12.5px] leading-5 text-muted-foreground">
+                Incluye un protector contra sobretensiones transitorias (DPS)
+                tipo 2 en el cuadro general, coordinado con el IGA. La decisión
+                definitiva debe justificarse conforme a la ITC-BT-23 y al nivel
+                de exposición de la vivienda.
+              </p>
+            </div>
+          </div>
+
+          <label className="flex shrink-0 cursor-pointer items-center gap-2.5 self-start rounded-lg border border-border bg-card px-3 py-2">
+            <span className="text-[12px] font-medium">
+              {conSobretensiones ? "Activada" : "Desactivada"}
+            </span>
+            <Switch
+              checked={conSobretensiones}
+              onCheckedChange={(v) =>
+                update({
+                  protecciones: {
+                    ...proyecto.protecciones,
+                    sobretensiones: v,
+                  },
+                })
+              }
+              aria-label="Incluir protección contra sobretensiones"
+            />
+          </label>
+        </div>
+
+        <div
+          className={cn(
+            "mt-3 rounded-lg border px-3 py-2.5 text-[11.5px] leading-4",
+            conSobretensiones
+              ? "border-primary/20 bg-primary/[0.04] text-muted-foreground"
+              : "border-accent/35 bg-accent/[0.05] text-accent-foreground dark:text-accent",
+          )}
+        >
+          {conSobretensiones
+            ? `El cuadro incluirá un DPS tipo 2 de ${polosDps} polos. También se presupuesta y se refleja en la memoria técnica.`
+            : "El cuadro se documentará sin DPS. El presupuesto no lo incluirá y la memoria declarará expresamente que no se prevé."}
+        </div>
+      </section>
 
       <section className="mt-4 surface-card p-5">
         <div className="flex items-center justify-between gap-3">
@@ -650,11 +733,12 @@ export function CuadroPanel({
           <Info className="mt-0.5 size-4 shrink-0 text-primary" />
           <p className="text-[12px] leading-5 text-muted-foreground">
             Se lee de izquierda a derecha: primero las protecciones generales
-            (IGA, DPS y diferenciales) y después los magnetotérmicos de cada
-            circuito. Cada PIA indica el diferencial que lo protege (D1, D2…) en su
-            etiqueta o al pasar el cursor. Cada bloque ocupa su ancho real en
-            módulos de 17,5 mm; el punto rojo señala un circuito con comprobaciones
-            pendientes. El esquema unifilar se desarrolla en la memoria.
+            (IGA, {conSobretensiones ? "DPS y " : ""}diferenciales) y después los
+            magnetotérmicos de cada circuito. Cada PIA indica el diferencial que lo
+            protege (D1, D2…) en su etiqueta o al pasar el cursor. Cada bloque ocupa
+            su ancho real en módulos de 17,5 mm; el punto rojo señala un circuito
+            con comprobaciones pendientes. El esquema unifilar se desarrolla en la
+            memoria.
           </p>
         </div>
       </section>

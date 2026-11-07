@@ -45,6 +45,7 @@ const SECCION_LABEL: Record<SeccionId, string> = {
   calculos: "Cálculos eléctricos",
   cuadro: "Cuadro y protecciones",
   tierra: "Puesta a tierra",
+  presupuesto: "Presupuesto",
   validacion: "Detector de errores",
   memoria: "Memoria técnica",
 };

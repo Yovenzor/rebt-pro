@@ -111,6 +111,28 @@ export interface Ajustes {
   precioKwh: number;
 }
 
+export interface Protecciones {
+  /** Incluye un protector contra sobretensiones transitorias (DPS). */
+  sobretensiones: boolean;
+}
+
+export interface LineaPresupuestoManual {
+  id: string;
+  descripcion: string;
+  unidad: string;
+  cantidad: number;
+  precioUnitario: number;
+}
+
+export interface Presupuesto {
+  /** IVA aplicado al subtotal (%). */
+  ivaPct: number;
+  /** Precios unitarios que sustituyen a los orientativos, por clave de línea. */
+  precios: Record<string, number>;
+  /** Partidas añadidas a mano por el instalador. */
+  lineasManuales: LineaPresupuestoManual[];
+}
+
 export interface Proyecto {
   nombre: string;
   cliente: string;
@@ -137,6 +159,8 @@ export interface Proyecto {
   diferenciales: Diferencial[];
   tierra: PuestaTierra;
   ajustes: Ajustes;
+  protecciones: Protecciones;
+  presupuesto: Presupuesto;
 }
 
 export interface ResultadoCircuito {

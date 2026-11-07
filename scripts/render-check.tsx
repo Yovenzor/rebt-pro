@@ -12,6 +12,7 @@ import { CuadroPanel } from "../src/components/project/CuadroPanel";
 import { DatosPanel } from "../src/components/project/DatosPanel";
 import { ElectrificacionPanel } from "../src/components/project/ElectrificacionPanel";
 import { MemoriaDoc } from "../src/components/project/MemoriaDoc";
+import { PresupuestoPanel } from "../src/components/project/PresupuestoPanel";
 import { TierraPanel } from "../src/components/project/TierraPanel";
 import { ValidacionPanel } from "../src/components/project/ValidacionPanel";
 import { proyectoEjemplo } from "../src/lib/rebt/data";
@@ -83,6 +84,40 @@ check(
   "Tierra",
   <TierraPanel proyecto={proyecto} update={noop} resultado={resultado} />,
 );
+
+proyecto.presupuesto.lineasManuales.push({
+  id: "manual-check",
+  descripcion: "Ayuda de instalación",
+  unidad: "ud",
+  cantidad: 1,
+  precioUnitario: 50,
+});
+check(
+  "Presupuesto",
+  <PresupuestoPanel
+    proyecto={proyecto}
+    update={noop}
+    resultado={resultado}
+    onIrAProtecciones={noop}
+  />,
+);
+
+proyecto.protecciones.sobretensiones = false;
+check(
+  "Cuadro sin DPS",
+  <CuadroPanel proyecto={proyecto} update={noop} resultado={resultado} />,
+);
+check(
+  "Memoria sin DPS",
+  <MemoriaDoc
+    proyecto={proyecto}
+    resultado={resultado}
+    hallazgos={hallazgos}
+    generado="7 de noviembre de 2026"
+  />,
+);
+proyecto.protecciones.sobretensiones = true;
+
 check("Validación", <ValidacionPanel hallazgos={hallazgos} onIr={noop} />);
 
 console.log(`\nProyecto: ${resultado.circuitos.length} circuitos · ${hallazgos.length} hallazgos.`);
