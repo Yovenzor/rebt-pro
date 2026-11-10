@@ -14,7 +14,7 @@ import {
   TrendingUp,
   X,
 } from "lucide-react";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 
 export function CalculosPanel({
   proyecto,
@@ -26,14 +26,50 @@ export function CalculosPanel({
   resultado: ResultadoProyecto;
 }) {
   const [abiertos, setAbiertos] = useState<string[]>([]);
+  const [scrollMovil, setScrollMovil] = useState<{ id: string } | null>(null);
 
-  const toggle = (id: string) =>
+  const toggle = (id: string) => {
+    const abriendo = !abiertos.includes(id);
     setAbiertos((prev) =>
       prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id],
     );
+    if (abriendo) setScrollMovil({ id });
+  };
+
+  useEffect(() => {
+    if (!scrollMovil) return;
+    if (!window.matchMedia("(max-width: 767px)").matches) return;
+    const timer = window.setTimeout(() => {
+      document
+        .getElementById(`desarrollo-movil-${scrollMovil.id}`)
+        ?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 50);
+    return () => window.clearTimeout(timer);
+  }, [scrollMovil]);
 
   const updAjustes = (patch: Partial<Proyecto["ajustes"]>) =>
     update({ ajustes: { ...proyecto.ajustes, ...patch } });
+
+  const esConforme = (r: ResultadoProyecto["circuitos"][number]) =>
+    r.comprobaciones.intensidad &&
+    r.comprobaciones.caida &&
+    r.comprobaciones.proteccion &&
+    r.comprobaciones.seccionMinima;
+
+  const desarrolloDe = (r: ResultadoProyecto["circuitos"][number]) => {
+    const c = r.circuito;
+    return (
+      <DesarrolloCalculo
+        c={c}
+        r={r}
+        gamma={conductividad(c.aislamiento)}
+        fase={c.fases === 3 ? "√3" : "2"}
+        conductores={c.fases === 3 ? 3 : 2}
+        trifasico={c.fases === 3}
+        ok={esConforme(r)}
+      />
+    );
+  };
 
   return (
     <div>
@@ -100,16 +136,7 @@ export function CalculosPanel({
         >
           {resultado.circuitos.map((r) => {
             const c = r.circuito;
-            const gamma = conductividad(c.aislamiento);
-            const fase = c.fases === 3 ? "√3" : "2";
-            const conductores = c.fases === 3 ? 3 : 2;
-            const trifasico = c.fases === 3;
-            const ok =
-              r.comprobaciones.intensidad &&
-              r.comprobaciones.caida &&
-              r.comprobaciones.proteccion &&
-              r.comprobaciones.seccionMinima;
-
+            const ok = esConforme(r);
             const clave = r.circuito.id;
             const abierto = abiertos.includes(clave);
 
@@ -189,17 +216,9 @@ export function CalculosPanel({
                   </td>
                 </tr>
                 {abierto && (
-                  <tr>
+                  <tr className="hidden md:table-row">
                     <td colSpan={10} className="p-0">
-                      <DesarrolloCalculo
-                        c={c}
-                        r={r}
-                        gamma={gamma}
-                        fase={fase}
-                        conductores={conductores}
-                        trifasico={trifasico}
-                        ok={ok}
-                      />
+                      {desarrolloDe(r)}
                     </td>
                   </tr>
                 )}
@@ -207,6 +226,20 @@ export function CalculosPanel({
             );
           })}
         </DataTable>
+
+        {/* En móvil el desarrollo se muestra fuera de la tabla para no heredar
+            su ancho mínimo y poder leerlo sin desplazamiento horizontal. */}
+        {resultado.circuitos.map((r) =>
+          abiertos.includes(r.circuito.id) ? (
+            <div
+              key={`desarrollo-movil-${r.circuito.id}`}
+              id={`desarrollo-movil-${r.circuito.id}`}
+              className="mt-3 scroll-mt-24 md:hidden"
+            >
+              {desarrolloDe(r)}
+            </div>
+          ) : null,
+        )}
       </div>
 
       <div className="mt-6 grid gap-4 lg:grid-cols-2">
