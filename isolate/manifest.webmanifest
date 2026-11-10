@@ -1,0 +1,17 @@
+{
+  "name": "REBT Pro · Documentación REBT para instalaciones eléctricas",
+  "short_name": "REBT Pro",
+  "description": "Cálculo de instalaciones eléctricas de vivienda y generación de la documentación REBT en PDF.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#faf9f6",
+  "theme_color": "#1d2a33",
+  "icons": [
+    {
+      "src": "/logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
