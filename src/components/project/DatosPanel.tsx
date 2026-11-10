@@ -1,29 +1,8 @@
 import { SectionHeader, NumberField, SelectField, TextField } from "./ui";
 import type { Proyecto } from "@/lib/rebt/types";
+import { UBICACIONES, municipiosDe, provinciasDe } from "@/lib/rebt/ubicaciones";
 import { num } from "@/lib/format";
 import { Calculator, Info } from "lucide-react";
-
-const COMUNIDADES = [
-  "Andalucía",
-  "Aragón",
-  "Asturias",
-  "Illes Balears",
-  "Canarias",
-  "Cantabria",
-  "Castilla-La Mancha",
-  "Castilla y León",
-  "Cataluña",
-  "Comunidad Valenciana",
-  "Extremadura",
-  "Galicia",
-  "La Rioja",
-  "Madrid",
-  "Murcia",
-  "Navarra",
-  "País Vasco",
-  "Ceuta",
-  "Melilla",
-];
 
 export function DatosPanel({
   proyecto,
@@ -35,6 +14,29 @@ export function DatosPanel({
   highlightCampo?: string;
 }) {
   const s = proyecto.suministro;
+  const provincias = provinciasDe(proyecto.comunidad);
+  const municipios = municipiosDe(proyecto.comunidad, proyecto.provincia);
+  const provinciaOptions = provincias.map((p) => ({
+    value: p.nombre,
+    label: p.nombre,
+  }));
+  if (
+    proyecto.provincia &&
+    !provincias.some((p) => p.nombre === proyecto.provincia)
+  ) {
+    provinciaOptions.unshift({
+      value: proyecto.provincia,
+      label: `${proyecto.provincia} (dato anterior)`,
+    });
+  }
+  const municipioOptions = municipios.map((m) => ({ value: m, label: m }));
+  if (proyecto.municipio && !municipios.includes(proyecto.municipio)) {
+    municipioOptions.unshift({
+      value: proyecto.municipio,
+      label: `${proyecto.municipio} (dato anterior)`,
+    });
+  }
+
   const tension = s.fases === 3 ? 400 : 230;
   const cosPhi = s.cosPhi || 1;
   const intensidad =
@@ -93,32 +95,50 @@ export function DatosPanel({
               highlight={highlightCampo === "direccion"}
               className="sm:col-span-2"
             />
+            <SelectField
+              label="Comunidad autónoma"
+              value={proyecto.comunidad}
+              onChange={(v) =>
+                update({ comunidad: v, provincia: "", municipio: "" })
+              }
+              options={UBICACIONES.map((c) => ({
+                value: c.nombre,
+                label: c.nombre,
+              }))}
+              placeholder="Selecciona comunidad"
+            />
+            <SelectField
+              label="Provincia"
+              value={proyecto.provincia}
+              onChange={(v) =>
+                update({
+                  comunidad: proyecto.comunidad,
+                  provincia: v,
+                  municipio: "",
+                })
+              }
+              options={provinciaOptions}
+              field="provincia"
+              highlight={highlightCampo === "provincia"}
+              placeholder="Selecciona provincia"
+              disabled={!proyecto.comunidad}
+            />
+            <SelectField
+              label="Municipio"
+              value={proyecto.municipio}
+              onChange={(v) => update({ municipio: v })}
+              options={municipioOptions}
+              field="municipio"
+              highlight={highlightCampo === "municipio"}
+              placeholder="Selecciona municipio"
+              disabled={!proyecto.provincia}
+            />
             <TextField
               label="Código postal"
               value={proyecto.cp}
               onChange={(v) => update({ cp: v })}
               placeholder="28001"
               field="cp"
-            />
-            <TextField
-              label="Municipio"
-              value={proyecto.municipio}
-              onChange={(v) => update({ municipio: v })}
-              field="municipio"
-              highlight={highlightCampo === "municipio"}
-            />
-            <TextField
-              label="Provincia"
-              value={proyecto.provincia}
-              onChange={(v) => update({ provincia: v })}
-              field="provincia"
-              highlight={highlightCampo === "provincia"}
-            />
-            <SelectField
-              label="Comunidad autónoma"
-              value={proyecto.comunidad || "Madrid"}
-              onChange={(v) => update({ comunidad: v })}
-              options={COMUNIDADES.map((c) => ({ value: c, label: c }))}
             />
           </div>
         </section>

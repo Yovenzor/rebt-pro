@@ -22,6 +22,7 @@ import type {
   MetodoInstalacion,
   Proyecto,
 } from "./types";
+import { comunidadDeProvincia } from "./ubicaciones";
 
 export const SECCIONES_COMERCIALES = [
   1.5, 2.5, 4, 6, 10, 16, 25, 35,
@@ -554,6 +555,8 @@ export function buscarPreset(codigo: string): PresetCircuito | undefined {
 export function proyectoNuevo(datos: {
   nombre: string;
   cliente?: string;
+  comunidad?: string;
+  provincia?: string;
   municipio?: string;
   superficie?: number;
   tipoVivienda?: string;
@@ -582,6 +585,9 @@ export function proyectoNuevo(datos: {
   return {
     ...base,
     cliente: datos.cliente ?? "",
+    comunidad:
+      datos.comunidad || comunidadDeProvincia(datos.provincia ?? ""),
+    provincia: datos.provincia ?? "",
     municipio: datos.municipio ?? "",
     superficie,
     tipoVivienda: datos.tipoVivienda ?? "Unifamiliar",
@@ -734,8 +740,19 @@ export function normalizarProyecto(proyecto: Proyecto): Proyecto {
       ? presupuesto.precios
       : {};
 
+  const provincia =
+    typeof proyecto.provincia === "string" ? proyecto.provincia.trim() : "";
+  const comunidad =
+    comunidadDeProvincia(provincia) ||
+    (typeof proyecto.comunidad === "string" ? proyecto.comunidad : "");
+  const municipio =
+    typeof proyecto.municipio === "string" ? proyecto.municipio.trim() : "";
+
   return {
     ...proyecto,
+    comunidad,
+    provincia,
+    municipio,
     protecciones: {
       sobretensiones: protecciones?.sobretensiones ?? true,
     },

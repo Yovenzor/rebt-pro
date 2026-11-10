@@ -18,12 +18,17 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { NumberField, TextField } from "@/components/project/ui";
+import { NumberField, SelectField, TextField } from "@/components/project/ui";
 import { api } from "@/convex/_generated/api";
 import type { Id } from "@/convex/_generated/dataModel";
 import { useAuth } from "@/hooks/use-auth";
 import { fechaCorta } from "@/lib/format";
 import { proyectoNuevo } from "@/lib/rebt/data";
+import {
+  UBICACIONES,
+  municipiosDe,
+  provinciasDe,
+} from "@/lib/rebt/ubicaciones";
 import { cn } from "@/lib/utils";
 import { useMutation, useQuery } from "convex/react";
 import {
@@ -61,10 +66,14 @@ export default function Projects() {
   const [form, setForm] = useState({
     nombre: "",
     cliente: "",
+    comunidad: "",
+    provincia: "",
     municipio: "",
     superficie: 100,
     tipoVivienda: "Unifamiliar",
   });
+  const provincias = provinciasDe(form.comunidad);
+  const municipios = municipiosDe(form.comunidad, form.provincia);
 
   const handleCreate = async () => {
     if (!form.nombre.trim()) {
@@ -76,6 +85,8 @@ export default function Projects() {
       const data = proyectoNuevo({
         nombre: form.nombre.trim(),
         cliente: form.cliente.trim(),
+        comunidad: form.comunidad,
+        provincia: form.provincia,
         municipio: form.municipio.trim(),
         superficie: form.superficie,
         tipoVivienda: form.tipoVivienda,
@@ -286,7 +297,7 @@ export default function Projects() {
       </div>
 
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="sm:max-w-lg">
+        <DialogContent className="max-h-[calc(100vh-2rem)] overflow-y-auto sm:max-w-lg">
           <DialogHeader>
             <DialogTitle>Nueva instalación</DialogTitle>
             <DialogDescription>
@@ -310,14 +321,6 @@ export default function Projects() {
                 onChange={(v) => setForm((f) => ({ ...f, cliente: v }))}
                 placeholder="Nombre y apellidos"
               />
-              <TextField
-                label="Municipio"
-                value={form.municipio}
-                onChange={(v) => setForm((f) => ({ ...f, municipio: v }))}
-                placeholder="Municipio"
-              />
-            </div>
-            <div className="grid gap-4 sm:grid-cols-2">
               <NumberField
                 label="Superficie útil"
                 value={form.superficie}
@@ -325,6 +328,48 @@ export default function Projects() {
                 unit="m²"
                 min={20}
                 max={2000}
+              />
+            </div>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <SelectField
+                label="Comunidad autónoma"
+                value={form.comunidad}
+                onChange={(v) =>
+                  setForm((f) => ({
+                    ...f,
+                    comunidad: v,
+                    provincia: "",
+                    municipio: "",
+                  }))
+                }
+                options={UBICACIONES.map((c) => ({
+                  value: c.nombre,
+                  label: c.nombre,
+                }))}
+                placeholder="Selecciona comunidad"
+              />
+              <SelectField
+                label="Provincia"
+                value={form.provincia}
+                onChange={(v) =>
+                  setForm((f) => ({ ...f, provincia: v, municipio: "" }))
+                }
+                options={provincias.map((p) => ({
+                  value: p.nombre,
+                  label: p.nombre,
+                }))}
+                placeholder="Selecciona provincia"
+                disabled={!form.comunidad}
+              />
+            </div>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <SelectField
+                label="Municipio"
+                value={form.municipio}
+                onChange={(v) => setForm((f) => ({ ...f, municipio: v }))}
+                options={municipios.map((m) => ({ value: m, label: m }))}
+                placeholder="Selecciona municipio"
+                disabled={!form.provincia}
               />
               <div className="space-y-1.5">
                 <p className="text-[12px] font-medium text-foreground/80">

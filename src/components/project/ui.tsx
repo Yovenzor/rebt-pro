@@ -191,6 +191,8 @@ export function SelectField<T extends string | number>({
   field,
   highlight,
   className,
+  placeholder,
+  disabled,
 }: {
   label: string;
   value: T;
@@ -200,6 +202,8 @@ export function SelectField<T extends string | number>({
   field?: string;
   highlight?: boolean;
   className?: string;
+  placeholder?: string;
+  disabled?: boolean;
 }) {
   return (
     <Field
@@ -212,13 +216,14 @@ export function SelectField<T extends string | number>({
     >
       <Select
         value={String(value)}
+        disabled={disabled}
         onValueChange={(v) => {
           const found = options.find((o) => String(o.value) === v);
           if (found) onChange(found.value);
         }}
       >
         <SelectTrigger id={field} className="h-9 w-full">
-          <SelectValue />
+          <SelectValue placeholder={placeholder} />
         </SelectTrigger>
         <SelectContent>
           {options.map((o) => (
