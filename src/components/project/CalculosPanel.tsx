@@ -25,14 +25,12 @@ export function CalculosPanel({
   update: (patch: Partial<Proyecto>) => void;
   resultado: ResultadoProyecto;
 }) {
-  const [abiertos, setAbiertos] = useState<string[]>([]);
+  const [abierto, setAbierto] = useState<string | null>(null);
   const [scrollMovil, setScrollMovil] = useState<{ id: string } | null>(null);
 
   const toggle = (id: string) => {
-    const abriendo = !abiertos.includes(id);
-    setAbiertos((prev) =>
-      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id],
-    );
+    const abriendo = abierto !== id;
+    setAbierto(abriendo ? id : null);
     if (abriendo) setScrollMovil({ id });
   };
 
@@ -138,7 +136,7 @@ export function CalculosPanel({
             const c = r.circuito;
             const ok = esConforme(r);
             const clave = r.circuito.id;
-            const abierto = abiertos.includes(clave);
+            const estaAbierto = abierto === clave;
 
             return (
               <Fragment key={r.circuito.id}>
@@ -196,7 +194,7 @@ export function CalculosPanel({
                           "border-destructive/35 text-destructive hover:bg-destructive/5 hover:text-destructive",
                       )}
                       onClick={() => toggle(clave)}
-                      aria-expanded={abierto}
+                      aria-expanded={estaAbierto}
                       aria-label={`Ver desarrollo del cálculo de ${c.codigo}`}
                       title="Ver desarrollo del cálculo"
                     >
@@ -209,13 +207,13 @@ export function CalculosPanel({
                       <ChevronDown
                         className={cn(
                           "size-3.5 text-muted-foreground transition-transform",
-                          abierto && "rotate-180",
+                          estaAbierto && "rotate-180",
                         )}
                       />
                     </Button>
                   </td>
                 </tr>
-                {abierto && (
+                {estaAbierto && (
                   <tr className="hidden md:table-row">
                     <td colSpan={10} className="p-0">
                       {desarrolloDe(r)}
@@ -230,7 +228,7 @@ export function CalculosPanel({
         {/* En móvil el desarrollo se muestra fuera de la tabla para no heredar
             su ancho mínimo y poder leerlo sin desplazamiento horizontal. */}
         {resultado.circuitos.map((r) =>
-          abiertos.includes(r.circuito.id) ? (
+          abierto === r.circuito.id ? (
             <div
               key={`desarrollo-movil-${r.circuito.id}`}
               id={`desarrollo-movil-${r.circuito.id}`}
