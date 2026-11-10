@@ -485,26 +485,20 @@ export function CircuitosPanel({
             >
               <SelectTrigger
                 aria-label="Circuito a añadir"
-                className="h-9 w-full min-w-0 flex-1 rounded-lg border-border bg-card px-2.5 text-[13px] shadow-none transition-colors hover:bg-muted/30 focus-visible:ring-2 focus-visible:ring-ring/40 data-[state=open]:ring-2 data-[state=open]:ring-ring/25 dark:bg-card dark:hover:bg-muted/30 sm:w-[240px] sm:min-w-[210px] sm:flex-none"
+                className="h-9 w-full min-w-0 flex-1 sm:w-[240px] sm:min-w-[210px] sm:flex-none"
               >
                 <SelectValue placeholder="Añadir circuito…" />
               </SelectTrigger>
               <SelectContent
                 position="popper"
                 align="start"
-                className="max-h-[320px] w-[300px] max-w-[calc(100vw-2rem)] rounded-xl border-border/80 bg-popover p-1.5 shadow-xl"
+                className="max-h-[320px] w-[300px] max-w-[calc(100vw-2rem)]"
               >
                 {disponiblesITC.length > 0 && (
                   <SelectGroup>
-                    <SelectLabel className="px-2 pb-1 pt-1.5 text-[10px] font-semibold uppercase tracking-[0.12em]">
-                      ITC-BT-25 (disponibles)
-                    </SelectLabel>
+                    <SelectLabel>ITC-BT-25 (disponibles)</SelectLabel>
                     {disponiblesITC.map((d) => (
-                      <SelectItem
-                        key={d.value}
-                        value={d.value}
-                        className="rounded-md py-2 text-[12.5px]"
-                      >
+                      <SelectItem key={d.value} value={d.value}>
                         {d.label}
                       </SelectItem>
                     ))}
@@ -516,15 +510,9 @@ export function CircuitosPanel({
 
                 {disponiblesEspeciales.length > 0 && (
                   <SelectGroup>
-                    <SelectLabel className="px-2 pb-1 pt-1.5 text-[10px] font-semibold uppercase tracking-[0.12em]">
-                      Circuitos especiales
-                    </SelectLabel>
+                    <SelectLabel>Circuitos especiales</SelectLabel>
                     {disponiblesEspeciales.map((d) => (
-                      <SelectItem
-                        key={d.value}
-                        value={d.value}
-                        className="rounded-md py-2 text-[12.5px]"
-                      >
+                      <SelectItem key={d.value} value={d.value}>
                         {d.label}
                       </SelectItem>
                     ))}

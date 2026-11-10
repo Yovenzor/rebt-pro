@@ -1,5 +1,12 @@
 import { DataTable, SectionHeader, SelectField } from "./ui";
 import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { IGA_MINIMO_GRADO, TIPOS_DIFERENCIAL } from "@/lib/rebt/data";
 import { potenciaAdmisible } from "@/lib/rebt/engine";
@@ -493,18 +500,35 @@ export function CuadroPanel({
                   {r.in} A · curva {r.circuito.curva}
                 </p>
               </div>
-              <select
-                value={r.circuito.diferencialId}
-                onChange={(e) => moverCircuito(r.circuito.id, e.target.value)}
-                className="h-7 w-[110px] min-w-0 shrink-0 rounded-md border border-border bg-card px-1.5 text-[11.5px] outline-none focus-visible:ring-2 focus-visible:ring-ring/40 sm:w-[136px]"
-                aria-label={`Diferencial de ${r.circuito.nombre}`}
+              <Select
+                value={r.circuito.diferencialId || undefined}
+                onValueChange={(v) => moverCircuito(r.circuito.id, v)}
+                disabled={proyecto.diferenciales.length === 0}
               >
-                {proyecto.diferenciales.map((d) => (
-                  <option key={d.id} value={d.id}>
-                    {d.nombre}
-                  </option>
-                ))}
-              </select>
+                <SelectTrigger
+                  aria-label={`Diferencial de ${r.circuito.nombre}`}
+                  className="h-7 w-[110px] min-w-0 shrink-0 px-2 text-[11px] sm:w-[136px]"
+                >
+                  <SelectValue placeholder="Sin asignar" />
+                </SelectTrigger>
+                <SelectContent
+                  position="popper"
+                  align="end"
+                  className="max-h-[280px] w-[190px] max-w-[calc(100vw-2rem)]"
+                >
+                  {proyecto.diferenciales.length === 0 ? (
+                    <SelectItem value="__sin-diferencial" disabled>
+                      Sin diferenciales
+                    </SelectItem>
+                  ) : (
+                    proyecto.diferenciales.map((d) => (
+                      <SelectItem key={d.id} value={d.id}>
+                        {d.nombre}
+                      </SelectItem>
+                    ))
+                  )}
+                </SelectContent>
+              </Select>
             </div>
           ))}
         </div>

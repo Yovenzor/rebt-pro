@@ -217,7 +217,7 @@ export function SelectField<T extends string | number>({
           if (found) onChange(found.value);
         }}
       >
-        <SelectTrigger id={field} className="h-9 w-full bg-card">
+        <SelectTrigger id={field} className="h-9 w-full">
           <SelectValue />
         </SelectTrigger>
         <SelectContent>
