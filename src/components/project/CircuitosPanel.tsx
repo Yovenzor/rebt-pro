@@ -7,6 +7,16 @@ import {
 } from "./ui";
 import { Button } from "@/components/ui/button";
 import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectSeparator,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
   Dialog,
   DialogContent,
   DialogDescription,
@@ -417,6 +427,10 @@ export function CircuitosPanel({
       grupo: "Especiales",
     })),
   ];
+  const disponiblesITC = disponibles.filter((d) => d.grupo === "ITC-BT-25");
+  const disponiblesEspeciales = disponibles.filter(
+    (d) => d.grupo === "Especiales",
+  );
 
   const commit = (circuitos: Circuito[]) => update({ circuitos });
 
@@ -465,32 +479,65 @@ export function CircuitosPanel({
         description="Cada circuito se calcula de forma independiente: intensidad, sección por intensidad y por caída, protección, conductor de protección y tubo. Los valores automáticos respetan los mínimos reglamentarios."
         actions={
           <div className="flex w-full items-center gap-2 sm:w-auto">
-            <select
-              value={nuevoCodigo}
-              onChange={(e) => setNuevoCodigo(e.target.value)}
-              className="h-9 min-w-[210px] rounded-lg border border-border bg-card px-2.5 text-[13px] outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
-              aria-label="Circuito a añadir"
+            <Select
+              value={nuevoCodigo || undefined}
+              onValueChange={setNuevoCodigo}
             >
-              <option value="">Añadir circuito…</option>
-              <optgroup label="ITC-BT-25 (disponibles)">
-                {disponibles
-                  .filter((d) => d.grupo === "ITC-BT-25")
-                  .map((d) => (
-                    <option key={d.value} value={d.value}>
-                      {d.label}
-                    </option>
-                  ))}
-              </optgroup>
-              <optgroup label="Circuitos especiales">
-                {disponibles
-                  .filter((d) => d.grupo === "Especiales")
-                  .map((d) => (
-                    <option key={d.value} value={d.value}>
-                      {d.label}
-                    </option>
-                  ))}
-              </optgroup>
-            </select>
+              <SelectTrigger
+                aria-label="Circuito a añadir"
+                className="h-9 w-full min-w-0 flex-1 rounded-lg border-border bg-card px-2.5 text-[13px] shadow-none transition-colors hover:bg-muted/30 focus-visible:ring-2 focus-visible:ring-ring/40 data-[state=open]:ring-2 data-[state=open]:ring-ring/25 dark:bg-card dark:hover:bg-muted/30 sm:w-[240px] sm:min-w-[210px] sm:flex-none"
+              >
+                <SelectValue placeholder="Añadir circuito…" />
+              </SelectTrigger>
+              <SelectContent
+                position="popper"
+                align="start"
+                className="max-h-[320px] w-[300px] max-w-[calc(100vw-2rem)] rounded-xl border-border/80 bg-popover p-1.5 shadow-xl"
+              >
+                {disponiblesITC.length > 0 && (
+                  <SelectGroup>
+                    <SelectLabel className="px-2 pb-1 pt-1.5 text-[10px] font-semibold uppercase tracking-[0.12em]">
+                      ITC-BT-25 (disponibles)
+                    </SelectLabel>
+                    {disponiblesITC.map((d) => (
+                      <SelectItem
+                        key={d.value}
+                        value={d.value}
+                        className="rounded-md py-2 text-[12.5px]"
+                      >
+                        {d.label}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                )}
+
+                {disponiblesITC.length > 0 &&
+                  disponiblesEspeciales.length > 0 && <SelectSeparator />}
+
+                {disponiblesEspeciales.length > 0 && (
+                  <SelectGroup>
+                    <SelectLabel className="px-2 pb-1 pt-1.5 text-[10px] font-semibold uppercase tracking-[0.12em]">
+                      Circuitos especiales
+                    </SelectLabel>
+                    {disponiblesEspeciales.map((d) => (
+                      <SelectItem
+                        key={d.value}
+                        value={d.value}
+                        className="rounded-md py-2 text-[12.5px]"
+                      >
+                        {d.label}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                )}
+
+                {disponibles.length === 0 && (
+                  <SelectItem value="__sin-circuitos" disabled>
+                    No quedan circuitos disponibles
+                  </SelectItem>
+                )}
+              </SelectContent>
+            </Select>
             <Button
               size="sm"
               className="gap-1"
