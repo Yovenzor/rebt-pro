@@ -480,23 +480,23 @@ export function CuadroPanel({
           {resultado.circuitos.map((r) => (
             <div
               key={r.circuito.id}
-              className="flex items-center gap-2 rounded-lg border border-border/80 bg-card px-3 py-2"
+              className="flex min-w-0 items-center gap-2 rounded-lg border border-border/80 bg-card px-3 py-2"
             >
-              <span className="inline-flex min-w-8 justify-center rounded bg-muted px-1 py-0.5 text-[11px] font-semibold text-muted-foreground">
+              <span className="inline-flex min-w-8 shrink-0 justify-center rounded bg-muted px-1 py-0.5 text-[11px] font-semibold text-muted-foreground">
                 {r.circuito.codigo}
               </span>
               <div className="min-w-0 flex-1">
                 <p className="truncate text-[12.5px] font-medium">
                   {r.circuito.nombre}
                 </p>
-                <p className="text-[11px] text-muted-foreground">
+                <p className="truncate text-[11px] text-muted-foreground">
                   {r.in} A · curva {r.circuito.curva}
                 </p>
               </div>
               <select
                 value={r.circuito.diferencialId}
                 onChange={(e) => moverCircuito(r.circuito.id, e.target.value)}
-                className="h-7 max-w-[120px] rounded-md border border-border bg-card px-1.5 text-[11.5px] outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
+                className="h-7 w-[110px] min-w-0 shrink-0 rounded-md border border-border bg-card px-1.5 text-[11.5px] outline-none focus-visible:ring-2 focus-visible:ring-ring/40 sm:w-[136px]"
                 aria-label={`Diferencial de ${r.circuito.nombre}`}
               >
                 {proyecto.diferenciales.map((d) => (
